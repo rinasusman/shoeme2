@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Shoeme</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Colo Shop Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/template/styles/bootstrap4/bootstrap.min.css">
+<link href="/template/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" href="/template/plugins/themify-icons/themify-icons.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/template/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="/template/styles/single_responsive.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+crossorigin="anonymous"></script>
+
+<!-- Bootstrap -->
+<link type="text/css" rel="stylesheet" href="/main/css/bootstrap.min.css" />
+
+<!-- Slick -->
+<link type="text/css" rel="stylesheet" href="/main/css/slick.css" />
+<link type="text/css" rel="stylesheet" href="/main/css/slick-theme.css" />
+
+<!-- nouislider -->
+<link type="text/css" rel="stylesheet" href="/main/css/nouislider.min.css" />
+
+<!-- Font Awesome Icon -->
+<link rel="stylesheet" href="/main/css/font-awesome.min.css">
+
+<!-- Custom stlylesheet -->
+<link type="text/css" rel="stylesheet" href="/main/css/style.css" />
+
+
+
+</head>
+
+<body>
+    <%-include('userloged') %>
+    <style>
+        .profile {
+            width: 50%;
+            height: 500px;
+            border: 1px solid black;
+            border-radius: 20px;
+        }
+
+        .user-field h3 {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-field h3 label {
+            margin-right: 100px;
+        }
+    </style>
+		<!-- SECTION -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-sm-3">
+						<div class="user-profile">
+							<h3>User Information</h3>
+							<div class="user-details">
+								<div class="user-field">
+									<label for="username">Username:</label>
+									<span id="username">
+										<%= userData.name %>
+											<a href="#" class="edit-icon" onclick="openEditNamePopup()">
+												<i class="fa fa-pencil" aria-hidden="true"></i>
+											</a>
+									</span>
+								</div>
+								<div class="user-field">
+									<label for="email">Email:</label>
+									<span id="email">
+										<%= userData.email %>
+											<a href="#" class="edit-icon" onclick="openEditEmailPopup()">
+												<i class="fa fa-pencil" aria-hidden="true"></i>
+											</a>
+									</span>
+								</div>
+								<div class="user-field">
+									<label for="phone">Phone:</label>
+									<span id="phone">
+										<%= userData.number %>
+											<a href="#" class="edit-icon" onclick="openEditNumberPopup()">
+												<i class="fa fa-pencil" aria-hidden="true"></i>
+											</a>
+									</span>
+								</div>
+								<div class="user-field">
+									<label for="wallet">Wallet:</label>
+									<span id="phone">
+										₹<%= userData.wallet %> 
+									</span>
+								</div>
+								
+								<!-- Hidden Popup -->
+								<div id="editNamePopup" class="popup" style="display: none;">
+									<div class="popup-content">
+										<h2>Edit Username</h2>
+										<form id="editNameForm" action="/editName" method="POST">
+											<label for="newName">New Name:</label>
+											<input type="text" id="newName" name="newName" oninput="validateName()">
+											<button class="bg-danger border-none text-white" type="submit">Submit</button>
+										</form>
+										<span id="nameError" style="color: red;"></span>
+									</div>
+								</div>
+								<!-- Hidden Popup end  -->
+
+								<!-- Hidden Popup -->
+								<div id="editEmailPopup" class="popup" style="display: none;">
+									<div class="popup-content">
+										<h2>Edit Email ID</h2>
+										<form id="editEmailForm" action="/editEmail" method="POST">
+											<label for="newEmail">New Email ID:</label>
+											<input type="email" id="newEmail" name="newEmail" oninput="validateEmail()">
+											<button class="bg-danger text-white" type="submit">Submit</button>
+										</form>
+										<span id="emailError" style="color: red;"></span>
+									</div>
+								</div>
+								<!-- Hidden Popup end  -->
+
+								<!-- Hidden Popup -->
+								<div id="editNumberPopup" class="popup" style="display: none;">
+									<div class="popup-content">
+										<h2>Edit Phone Number</h2>
+										<form id="editNumberForm" action="/editNumber" method="POST">
+											<label for="newNumber">New Number:</label>
+											<input type="number" id="newNumber" name="newNumber"
+												oninput="validateMobile()">
+											<button class="bg-danger text-white" type="submit">Submit</button>
+										</form>
+										<span id="numberError" style="color: red;"></span>
+									</div>
+								</div>
+								<!-- Hidden Popup end  -->
+
+								<p class="text-success">
+									<%= message %>
+								</p>
+								<br>
+								<div class="user-field">
+									<span id="address">
+										<% userData.address.forEach((i, index)=> { %>
+											<h3>
+												<label for="address">Address: <%= index + 1 %></label>
+												<a href="/deleteAddress/<%= index %>" class="delete-address">
+													<i class="fa fa-trash text-danger" aria-hidden="true"></i>
+												</a>
+											</h3>
+											<p><strong>Full Name:</strong>
+												<%= i.fullname %>
+											</p>
+											<p><strong>Email ID:</strong>
+												<%= i.email %>
+											</p>
+											<p><strong>Address:</strong>
+												<%= i.address %>
+											</p>
+											<p><strong>City:</strong>
+												<%= i.city %>
+											</p>
+											<p><strong>Country:</strong>
+												<%= i.country %>
+											</p>
+											<p><strong>PIN:</strong>
+												<%= i.pin %>
+											</p>
+											<p><strong>Telephone:</strong>
+												<%= i.tel %>
+											</p>
+											<% }) %>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-sm-3">
+						<div class="billing-details">
+							<div class="section-title">
+								<h3 class="title">Add Address</h3>
+							</div>
+							<form action="/addAddressFromProfile" method="post">
+								<div class="form-group">
+									<input class="input" type="text" name="fullname" id="aName" placeholder="Full Name"
+										oninput="validateAName()">
+									<span id="aNameError" style="color: red;"></span>
+								</div>
+								<div class="form-group">
+									<input class="input" type="email" name="email" id="aEmail" placeholder="Email"
+										oninput="validateAEmail()">
+									<span id="aEmailError" style="color: red;"></span>
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="address" id="address" placeholder="Address"
+										oninput="validateAddress()">
+									<span id="addressError" style="color: red;"></span>
+								</div>
+
+								<div class="form-group">
+									<input class="input" type="text" name="city" id="city" placeholder="City"
+										oninput="validateCityName()">
+									<span id="cityNameError" style="color: red;"></span>
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="country" id="countryName"
+										placeholder="Country" oninput="validateCountryName()">
+									<span id="countryNameError" style="color: red;"></span>
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="pin" id="pin" placeholder="PIN Code"
+										oninput="validatePinCode()">
+									<span id="pinError" style="color: red;"></span>
+								</div>
+								<div class="form-group">
+									<input class="input" type="tel" name="tel" id="aNumber" placeholder="Telephone"
+										oninput="validateAMobile()">
+									<span id="aNumberError" style="color: red;"></span>
+								</div>
+								<input type="submit" Id="aSubmitButton" name="aSubmitButton" value="Add Address"
+									class="btn btn-block btn-danger">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<!-- /SECTION -->
+
+
+
+<script src="/template/js/jquery-3.2.1.min.js"></script>
+<script src="/template/styles/bootstrap4/popper.js"></script>
+<script src="/template/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="/template/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/template/plugins/easing/easing.js"></script>
+<script src="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="/template/js/single_custom.js"></script>
+<script src="/main/js/jquery.min.js"></script>
+<script src="/main/js/bootstrap.min.js"></script>
+<script src="/main/js/slick.min.js"></script>
+<script src="/main/js/nouislider.min.js"></script>
+<script src="/main/js/jquery.zoom.min.js"></script>
+<script src="/main/js/main.js"></script>
+<script src="javascripts/address validation.js"></script>
+<script src="javascripts/UserDetailsEditValidation.js"></script>
+<script>
+    function openEditNamePopup() {
+        let name = document.querySelector(`#username`).innerText;
+        document.querySelector("#newName").value = name;
+        document.getElementById("editNamePopup").style.display = "block";
+    }
+    function openEditEmailPopup() {
+        let email = document.querySelector(`#email`).innerText;
+        document.querySelector("#newEmail").value = email;
+        document.getElementById("editEmailPopup").style.display = "block";
+    }
+    function openEditNumberPopup() {
+        let phoneElement = document.querySelector('#phone');
+        let number = phoneElement.textContent.trim();
+        document.querySelector("#newNumber").value = number;
+        document.getElementById("editNumberPopup").style.display = "block";
+    }
+</script>
+</body>
+
+</html>

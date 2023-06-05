@@ -1,0 +1,100 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link type="text/css" rel="stylesheet" href="/login/css/style.css">
+
+    <link type="text/css" rel="stylesheet" href="/login/css/bootstrap/bootstrap-reboot.css">
+  
+    <link type="text/css" rel="stylesheet" href="/login/css/bootstrap/bootstrap.css">
+  
+    <link type="text/css" rel="stylesheet" href="/login/fonts/icomoon/demo-files/demo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    
+	<link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+	<link href="/template/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+	<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+	<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/animate.css">
+	<link rel="stylesheet" type="text/css" href="/template/styles/main_styles.css">
+	<link rel="stylesheet" type="text/css" href="/template/styles/responsive.css">
+    <style>
+        body, html {
+            height: 100%;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .login-form {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .login-form .forgot-pass {
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+  <div class="main_nav_container">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-right">
+					<div class="logo_container">
+						<a href="/">SHOE<span>ME</span></a>
+					</div>
+					<nav class="navbar">
+						<ul class="navbar_menu">
+							<li><a href="#">ALL PRODUCTS</a></li>
+							<li><a href="#">MENS</a></li>
+							<li><a href="#">WOMENS</a></li>
+							<li><a href="#">KIDS</a></li>
+						</ul>
+				
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+      <div class="login-container">
+        <div class="login-form">
+            <div class="text-center mb-5">
+                <h3 class="text-bold" style="font-weight: bold;">YOUR ACCOUNT FOR <br>EVERYTHING SHOE<span class="text-danger">ME</span></h3>
+            </div>
+            
+            <form action="/login" method="post">
+                <div class="form-group first">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group last mb-3">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="ml-auto"><a href="/forgot_pass" class="forgot-pass">Forgot Password?</a></span>
+                </div>
+                <br>
+                <h6 class="text-center" style="color: #888; font-style: italic;">By logging in, you agree to Shoeme's Privacy Policy and<br> Terms of Use.</h6> 
+                
+                <input type="submit" value="Log In" class="btn btn-block btn-dark">
+                <p class="text-center my-4">New here? <a href="/signup">Create an account</a></p>
+                <p class="text-center text-danger my-4"><%= footer %></p>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+      <script src="/login/js/main.js"></script>
+</body>
+</html> 

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Shoeme</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Colo Shop Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/template/styles/bootstrap4/bootstrap.min.css">
+<link href="/template/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" href="/template/plugins/themify-icons/themify-icons.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/template/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="/template/styles/single_responsive.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+crossorigin="anonymous"></script>
+
+<!-- Bootstrap -->
+<link type="text/css" rel="stylesheet" href="/main/css/bootstrap.min.css" />
+
+<!-- Slick -->
+<link type="text/css" rel="stylesheet" href="/main/css/slick.css" />
+<link type="text/css" rel="stylesheet" href="/main/css/slick-theme.css" />
+
+<!-- nouislider -->
+<link type="text/css" rel="stylesheet" href="/main/css/nouislider.min.css" />
+
+<!-- Font Awesome Icon -->
+<link rel="stylesheet" href="/main/css/font-awesome.min.css">
+
+<!-- Custom stlylesheet -->
+<link type="text/css" rel="stylesheet" href="/main/css/style.css" />
+
+
+
+</head>
+
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+	<% if(typeof userData !="undefined" ){ %>
+		<%-include('userloged') %>
+			<%}else{%>
+				<%-include('usernotloged') %>
+					<%}%>
+
+	<div class="container single_product_container">
+
+		<div class="row">
+			<div class="col-lg-7">
+				<div class="single_product_pics">
+					<div class="row">
+						<div class="col-md-5 col-md-push-2">
+							<div style="width: 400px;" id="product-main-img">
+								<% if (data.length> 0 && data[0].imageUrl &&
+									Array.isArray(data[0].imageUrl)) { %>
+									<% data[0].imageUrl.forEach(function(image) { %>
+										<div class="product-preview">
+											<img src="/images/uploads/<%= image %>" alt="">
+										</div>
+										<% }); %>
+											<% } %>
+							</div>
+						</div>
+						<!-- /Product main img -->
+
+						<!-- Product thumb imgs -->
+						<div class="col-md-2  col-md-pull-5">
+							<div id="product-imgs">
+								<% if (data.length> 0 && data[0].imageUrl &&
+									Array.isArray(data[0].imageUrl)) { %>
+									<% data[0].imageUrl.forEach(function(image) { %>
+										<div class="product-preview">
+											<img src="/images/uploads/<%= image %>" alt="">
+										</div>
+										<% }); %>
+											<% } %>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-5">
+				<div class="product_details">
+					<div class="product_details_title">
+						<h2><%=data[0].productName%></h2>
+						<p><%=data[0].description%></p>
+					</div>
+					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
+						<span class="ti-truck"></span><span>free delivery</span>
+					</div>
+					<div class="product_price">₹<%=data[0].price%></div>
+					<ul class="star_rating">
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+					</ul>
+					<div class="product_color">
+						<span> Color:</span>
+						<ul>
+							<li ><%=data[0].color%></li>	
+						</ul>
+						<br>
+						<span> Brand:</span>
+						<ul>
+							<li > <%=data[0].brand%></li>	
+						</ul><br>
+						<span> Size:</span>
+						<ul>
+							<li ><%=data[0].size%></li>	
+						</ul>
+						<br>
+						<span> Category:</span>
+						<ul>
+							<li ><%= data[0].categoryDetails.category %></li>	
+						</ul>
+					</div>
+					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+						
+						
+						<div class="red_button add_to_cart_button">
+							<p>
+								<%= data._id %>
+							</p>
+							<a href="/addToCart/<%= data[0]._id %>">add to cart</a></div>
+						<div class="mx-2  d-flex flex-column add_to_cart_button align-items-center justify-content-center"><a href="/addToWishlist/<%= data[0]._id %>">add to wishlist</a></div>
+					</div>
+					<p class="text-success"><%= text %></p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Tabs -->
+
+
+	<!-- Benefit -->
+
+	<div class="benefit">
+		<div class="container">
+			<div class="row benefit_row">
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>free shipping</h6>
+							<p>Suffered Alteration in Some Form</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>cach on delivery</h6>
+							<p>The Internet Tend To Repeat</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>45 days return</h6>
+							<p>Making it Look Like Readable</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>opening all week</h6>
+							<p>8AM - 09PM</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Newsletter -->
+
+
+
+	<!-- Footer -->
+
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+						<ul class="footer_nav">
+							<li><a href="#">Blog</a></li>
+							<li><a href="#">FAQs</a></li>
+							<li><a href="contact.html">Contact us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="footer_nav_container">
+						<div class="cr">©2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Colorlib</a> &amp; distributed by <a href="https://themewagon.com">ThemeWagon</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+</div>
+
+<script src="/template/js/jquery-3.2.1.min.js"></script>
+<script src="/template/styles/bootstrap4/popper.js"></script>
+<script src="/template/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="/template/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/template/plugins/easing/easing.js"></script>
+<script src="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="/template/js/single_custom.js"></script>
+<script src="/main/js/jquery.min.js"></script>
+<script src="/main/js/bootstrap.min.js"></script>
+<script src="/main/js/slick.min.js"></script>
+<script src="/main/js/nouislider.min.js"></script>
+<script src="/main/js/jquery.zoom.min.js"></script>
+<script src="/main/js/main.js"></script>
+
+</body>
+
+</html>

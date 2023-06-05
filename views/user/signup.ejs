@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/login/css/owl.carousel.min.css">
+
+    <link type="text/css" rel="stylesheet" href="/login/css/bootstrap.min.css">
+  
+    <link type="text/css" rel="stylesheet" href="/login/css/style.css">
+  
+    <link type="text/css" rel="stylesheet" href="/login/css/bootstrap/bootstrap-reboot.css">
+  
+    <link type="text/css" rel="stylesheet" href="/login/css/bootstrap/bootstrap.css">
+  
+    <link type="text/css" rel="stylesheet" href="/login/fonts/icomoon/demo-files/demo.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+	<link href="/template/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+	<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+	<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/animate.css">
+	<link rel="stylesheet" type="text/css" href="/template/styles/main_styles.css">
+	<link rel="stylesheet" type="text/css" href="/template/styles/responsive.css">
+    <style>
+        body, html {
+            height: 100%;
+        }
+
+        .signup-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .signup-form {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main_nav_container">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-right">
+					<div class="logo_container">
+						<a href="/">SHOE<span>ME</span></a>
+					</div>
+					<nav class="navbar">
+						<ul class="navbar_menu">
+							<li><a href="#">ALL PRODUCTS</a></li>
+							<li><a href="#">MENS</a></li>
+							<li><a href="#">WOMENS</a></li>
+							<li><a href="#">KIDS</a></li>
+						</ul>
+				
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="signup-container">
+        <div class="signup-form">
+            <div class="text-center mb-4">
+                <h4 style="font-weight: bold;">BECOME A SHOEME MEMBER</h4>
+                <h6 style="color: darkgray; font-style: italic;">Create your Shoeme Member profile and get first <br>access to the very best of Nike products, inspiration <br>and community.</h6>
+            </div>
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Username" oninput="validateName()">
+                    <span id="nameError" style="color: red;"></span>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Id" oninput="validateEmail()">
+                    <span id="emailError" style="color: red;"></span>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" id="number" name="number" placeholder="Mobile Number" oninput="validateMobile()">
+                    <span id="numberError" style="color: red;"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" oninput="validatePassword()">
+                    <span id="passwordError" style="color: red;"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" oninput="validateConfirmPassword()">
+                    <span id="confirm_passwordError" style="color: red;"></span>
+                </div>
+                <input type="submit" id="submitButton" name="submitButton" disabled value="signup" class="btn btn-block btn-dark">
+                <p class="text-center my-4">Already have an account? <a href="/login">Back to Login</a></p>
+                <p class="text-center my-4"><%= footer %></p>
+            </form>
+        </div>
+    </div>
+
+    
+
+  <script>
+    (function(){
+      localStorage.setItem("countdown", 60)
+    }()) 
+  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <script src="/javascripts/validation.js"></script>
+</body>
+</html>
