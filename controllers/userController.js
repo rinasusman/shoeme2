@@ -641,7 +641,7 @@ const resettingPassword = async (req, res) => {
   
   const decrementOrIncrementCart = async (req, res) => {
     try {
-      const cartId = req.body.cartId;
+      let cartId = req.body.cartId;
       const itemId = req.body.itemId;
       const value = req.body.value;
       const cartDoc = await Cart.findOne({ _id: cartId });
@@ -678,7 +678,9 @@ const resettingPassword = async (req, res) => {
             }
           ];
           await Cart.bulkWrite(updates)
-          res.json({ success: true });
+          const cartDocs = await Cart.findOne({ _id: cartId });
+      const items = cartDocs.item.find((i) => i._id.toString() === itemId);
+          res.json({ success: true,qty:items.quantity });
         }
       }
     } catch (error) {
