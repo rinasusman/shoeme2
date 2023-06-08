@@ -64,7 +64,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Category</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="/admin/categorylist" class="dropdown-item">Categories</a>
-                            <a href="/admin/catCreate" class="dropdown-item">Add Category</a>
+                            <a href="/admin/bannerCreate" class="dropdown-item">Add Category</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -74,9 +74,23 @@
                             <a href="/admin/prodCreate" class="dropdown-item">Add Product</a>
                         </div>
                     </div>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Banner</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Offers</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Coupons</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Banner</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/bannerlist" class="dropdown-item">Banners</a>
+                            <a href="/admin/bannerCreate" class="dropdown-item">Add Banner</a>
+                        </div>
+                    </div>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Orders</a>
+                   
+                    <div class="nav-item dropdown">
+                        <a href="/admin/offerlist" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Offers</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/productOfferCreate" class="dropdown-item">Create Product Offer</a>
+                            <a href="/admin/prodCreate" class="dropdown-item">Add Product</a>
+                        </div>
+                    </div>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Coupons</a>
                     
                 </div>
             </nav>
@@ -136,9 +150,6 @@
                       <div class="bg-light rounded h-100 p-4">
                           <h6 class="mb-4">PRODUCTS DETAILS</h6>
                           <div class="table-responsive">
-                            <h3 class="text-danger text-center">
-                              <%= text %>
-                          </h3>
                               <table class="table" id="myTable">
                                   <thead>
                                       <tr>
@@ -184,8 +195,8 @@
                                         <td>
                                             <%= i.totalPrice %>
                                         </td>
-                                        <td>
-                                    <select id="statusDropdown" onchange="changestatus(event, '<%= i._id %>')">
+                                        <td style="color: red;"><%= i.status %>
+                                    <!-- <select id="statusDropdown" onchange="changestatus(event, '<%= i._id %>')">
                                         <option value="Placed" <%=i.status==="Placed" ? "selected" : "" %>>Placed
                                         </option>
                                         <option value="Shipping" <%=i.status==="Shipping" ? "selected" : "" %>>Shipping
@@ -196,7 +207,7 @@
                                             >Delivered</option>
                                         <option value="Cancelled" <%=i.status==="Cancelled" ? "selected" : "" %>
                                             >Cancelled</option>
-                                    </select>
+                                    </select> -->
                                 </td>
                             </tr>
                             <% }); %>

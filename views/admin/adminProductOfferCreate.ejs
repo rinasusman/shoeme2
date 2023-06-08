@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -34,7 +34,8 @@
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -108,32 +109,24 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                
-                
-                    <form class="d-none d-md-flex ms-4">
-                <input class="form-control border-0  " id="search" name="search" type="text"
-                            placeholder="Username" aria-label="Search" value="<%= search || "" %>">
-                            <br>
-                        <button type="submit" class="btn btn-primary mx-2 border-0"
-                            onclick="event.preventDefault(); searchAndPagination('search')">SEARCH</button>
-                        </form>
+              
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                        
+
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            
+
                             <hr class="dropdown-divider">
-                            
+
                             <hr class="dropdown-divider">
-                           
+
                             <hr class="dropdown-divider">
-                           
+
                         </div>
                     </div>
-                    
+
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            
+
                             <span class="d-none d-lg-inline-flex">Admin</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -144,94 +137,35 @@
             </nav>
             <!-- Navbar End -->
 
-            <div class="container-fluid pt-4 px-4">
-              <div class="row g-4">
-                
-                
-                
-             
-           
-         
-                  <div class="col-12">
-                      <div class="bg-light rounded h-100 p-4">
-                          <h6 class="mb-4">USER DETAILS</h6>
-                          <div class="table-responsive">
-                              <table class="table" id="myTable">
-                                  <thead>
-                                      <tr>
-                                          <th scope="col">SL.NO</th>
-                                          <th scope="col">NAME</th>
-                                          <th scope="col">EMAIL ID</th>
-                                          <th scope="col">MOBILE NUMBER</th>
-                                          <th scope="col">ACTION</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                    <% data.forEach(function(x, i) { %>
-                                      <tr>
-                                          
-                                          <td><%= i + 1 %></td>
-                                          <td><a onclick="orderList('<%= x._id %>')" class="username"><%= x.name %></a></td>
-                                          <td><%= x.email %></td>
-                                          <td><%= x.number %></td>
-                                          <td>
-                                          <% if (x.blockStatus) { %>
-                                            <button onclick="BlockUnblock('<%= x._id %>', 'unBlock')" class="btn btn-success userListButton">Unblock</button>
-                                            <% } else { %>
-                                            <button onclick="BlockUnblock('<%= x._id %>', 'block')" class="btn btn-danger userListButton">Block</button>
-                                            <% } %>
-                                          </td>
-                                      </tr>
-                                      <% }); %>
-                                   
-                                  </tbody>
-                              </table>
-                              <h4 class="text-danger text-center">
-                                <%= text %>
-                            </h4>
-                            <div class="store-filter clearfix">
-                                <div class="store-pagination" style="text-align: center;">
-                                    <ul class="pagination-list"
-                                        style="display: inline-block; list-style-type: none; margin: 0; padding: 0;">
-                                        <% for (let i=1; i <= totalPages; i++) { %>
-                                            <li <% if (i===page) { %>class="active"<% } %> style="display: inline-block; margin: 0 5px;">
-                                              <button onclick="searchAndPagination('<%= i %>')" style="text-decoration: none; padding: 5px 10px; border: 1px solid #ccc; <% if (i===page) { %>background-color: #ccc; color: white;<% } %>">
-                                                <%= i %>
-                                              </button>
-                                            </li>
-                                          <% } %>
-                                          
-                                    </ul>
-                                </div>
-                            </div >
-                          </div>
-                      </div>
+
+            <div class="container-fluid pt-4">
+                <div class="row justify-content-center">
+                  <div class="col-sm-12 col-xl-6">
+                    <div class="bg-light rounded h-100 p-4">
+                      <h6 class="mb-4">CREATE PRODUCT OFFER</h6>
+                      <form action="/admin/productOfferCreate" method="post">
+                        <input class=" mx-auto my-3 form-control" type="text" placeholder="Offer Name" name="name" id="name" oninput="validateName()">
+                        <div style="display: flex; justify-content: center;">
+                            <span id="nameError" style="color: red;"></span>
+                        </div>
+                        <input class=" mx-auto my-3 form-control" type="number" placeholder="Offer Percentage" name="percentage" id="percentage" oninput="validatePercentage()">
+                        <div style="display: flex; justify-content: center;">
+                            <span id="percentageError" style="color: red;"></span>
+                        </div>
+                        <select class=" mx-auto my-3 form-control" name="product">
+                            <%for(let i=0;i <data.length; i++){%>
+                                <option value=<%=data[i]._id%>><%=data[i].productName%>
+                                </option>
+                                <%}%>
+                        </select>
+                        <button class=" login mx-auto my-3 form-control bg-primary text-white" id="submitButton" disabled type="submit">ADD</button>
+                      </form>
+                    </div>
                   </div>
+                </div>
               </div>
-          </div>
-
-            <!-- Sale & Revenue Start -->
-
-
-
-            <!-- Sales Chart Start -->
-        
-            <!-- Sales Chart End -->
-
-
-            <!-- Recent Sales Start -->
-       
-            <!-- Recent Sales End -->
-
-
-            <!-- Widgets Start -->
-     
-            <!-- Widgets End -->
-
-
-            <!-- Footer Start -->
+              
           
-            <!-- Footer End -->
         </div>
         <!-- Content End -->
 
@@ -241,70 +175,18 @@
     </div>
 
     <!-- JavaScript Libraries -->
- 
-     <script>
-           function searchAndPagination(page) {
-            const searchValue = document.getElementById("search").value
-            const url = `/admin/userlist?page=${page}&search=${searchValue}`;
-            window.location.href = url;
 
-        }
-      function BlockUnblock(id, type) {
-          fetch("/admin/blockUnblockUser", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                  type,
-                  id
-              })
-          })
-              .then(response => {
-              })
-              .then(data => {
-                  location.reload()
-              })
-              .catch(error => {
-                  console.log(error);
-              });
-      }
-  </script>
-  <script>
-    function orderList(userId) {
-        fetch("/admin/userorderList", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ userId })
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error("Request failed.");
-                }
-            })
-            .then(html => {
-                document.open();
-                document.write(html);
-                document.close();
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-</script>
+    <script src="/javascripts/offerValidation.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/admin/lib/chart/chart.min.js"></script>
-    <script src="admin/lib/easing/easing.min.js"></script>
-    <script src="admin/lib/waypoints/waypoints.min.js"></script>
-    <script src="admin/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="admin/lib/tempusdominus/js/moment.min.js"></script>
-    <script src="admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="/admin/lib/easing/easing.min.js"></script>
+    <script src="/admin/lib/waypoints/waypoints.min.js"></script>
+    <script src="/admin/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/admin/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="/admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="/admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
 
     <!-- Template Javascript -->
     <script src="/admin/js/main.js"></script>

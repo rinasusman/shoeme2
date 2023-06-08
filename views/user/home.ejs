@@ -74,20 +74,22 @@
 						<section class="section-slide">
 							<div class="wrap-slick1">
 								<div class="slick1">
-									<div class="item-slick1" style="background-image: url(images/slide-01.jpg);">
+									<% bannerData.forEach(function(item, index) { %>
+									<div class="item-slick1 <% if (index === 0) { %>active<% } %>" style="background-image: url('/images/uploads/<%= item.bannerImage %>')" alt="Slide <%= index + 1 %>">
+										<!-- <img src="/images/uploads/<%= item.bannerImage %>" class="d-block w-100" alt="Slide <%= index + 1 %>"> -->
 										<div class="container h-full">
 											<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
 												<div class="layer-slick1 animated visible-false"
 													data-appear="fadeInDown" data-delay="0">
 													<span class="ltext-101 cl2 respon2 text-white">
-														Mens Collection 2023
+														<%= item.mainHeading %>
 													</span>
 												</div>
 
 												<div class="layer-slick1 animated visible-false" data-appear="fadeInUp"
 													data-delay="800">
 													<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1 text-white">
-														NEW SEASON
+														<%= item.description %>
 													</h2>
 												</div>
 
@@ -101,62 +103,8 @@
 											</div>
 										</div>
 									</div>
-
-									<div class="item-slick1" style="background-image: url(images/slide-02.jpg);">
-										<div class="container h-full">
-											<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-												<div class="layer-slick1 animated visible-false" data-appear="rollIn"
-													data-delay="0">
-													<span class="ltext-101 cl2 respon2 text-white">
-														Women New-Season
-													</span>
-												</div>
-
-												<div class="layer-slick1 animated visible-false"
-													data-appear="lightSpeedIn" data-delay="800">
-													<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1 text-white">
-														Shoes
-													</h2>
-												</div>
-
-												<div class="layer-slick1 animated visible-false" data-appear="slideInUp"
-													data-delay="1600">
-													<a href="#"
-														class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-														Shop Now
-													</a>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="item-slick1" style="background-image: url(images/slide-03.jpg);">
-										<div class="container h-full">
-											<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-												<div class="layer-slick1 animated visible-false"
-													data-appear="rotateInDownLeft" data-delay="0">
-													<span class="ltext-101 cl2 respon2 text-white">
-														Kids Collection 2023
-													</span>
-												</div>
-
-												<div class="layer-slick1 animated visible-false"
-													data-appear="rotateInUpRight" data-delay="800">
-													<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1 text-white">
-														New arrivals
-													</h2>
-												</div>
-
-												<div class="layer-slick1 animated visible-false" data-appear="rotateIn"
-													data-delay="1600">
-													<a href="#"
-														class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-														Shop Now
-													</a>
-												</div>
-											</div>
-										</div>
-									</div>
+									<% }) %>
+									
 								</div>
 							</div>
 						</section>
@@ -219,14 +167,27 @@
 						
 						<div class="product-item men">
 							<div class="product discount product_filter">
+								
 								<div class="product_image">
 									<img style="height: 230px;" src="/images/uploads/<%= x.imageUrl[0] %>" alt="">
+									
 								</div>
-								<div class="favorite favorite_left"></div>
+								<div class=" text-danger favorite_left">
+									<% if(x.offerPercentage!=0) { %>
+										<span class="sale bg-danger text-dark m-2"><%= x.offerPercentage %> %
+										</span>
+										<% }; %>
+								
+							</div>
+								
 							
-								<div class="product_info">
+								<div class="product_info"> 
 									<h6 class="product_name"><a href=""><%= x.productName %></a></h6>
-									<div class="product_price">₹<%= x.price %> </div>
+									<div class="product_price">₹<%= x.price %> <% if(x.offerPercentage!=0) { %><del
+										class="product-old-price">
+										<%= x.offerPrice %> ₹
+									</del>
+									<% }; %></div>
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a onclick="window.location.href='/login/prodDetails/<%= x._id %>'">View</a></div>

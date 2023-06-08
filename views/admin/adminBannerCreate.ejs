@@ -65,7 +65,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Category</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="/admin/categorylist" class="dropdown-item">Categories</a>
-                            <a href="/admin/bannerCreate" class="dropdown-item">Add Category</a>
+                            <a href="/admin/catCreate" class="dropdown-item">Add Category</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -83,14 +83,7 @@
                         </div>
                     </div>
                     <a href="" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Orders</a>
-                   
-                    <div class="nav-item dropdown">
-                        <a href="/admin/offerlist" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Offers</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="/admin/productOfferCreate" class="dropdown-item">Create Product Offer</a>
-                            <a href="/admin/prodCreate" class="dropdown-item">Add Product</a>
-                        </div>
-                    </div>
+                    <a href="/admin/offerlist" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Offers</a>
                     <a href="" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Coupons</a>
                     
                 </div>
@@ -138,91 +131,24 @@
             <!-- Navbar End -->
 
 
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4 justify-content-center">
-
-
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">CREATE PRODUCT</h6>
-                            <form action="/admin/addProduct" method="post" enctype="multipart/form-data">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" name="name" id="name" oninput="validateProductName()"
-                                        placeholder="name@example.com">
-                                    <label for="floatingInput">PRODUCT NAME</label>
-                                    <span class="text-danger d-flex justify-content-center align-items-center" id="nameError"></span>
-                                </div>
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Description" name="description" type="text"
-                                        id="floatingTextarea" style="height: 150px;"></textarea>
-                                    <label for="floatingTextarea">DESCRIPTION</label>
-                                <br>
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="floatingSelect" name="category"
-                                        aria-label="Floating label select example">
-                                        <%for(let i=0;i <category.length; i++){%>
-                                            <option value=<%=category[i]._id%>><%=category[i].category%>
-                                            </option>
-                                            <%}%>
-                                    </select>
-                                    <label for="floatingSelect">CATEGORY</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="file" class="form-control"  name="image" id="image" accept="image/*"
-                                    multiple required  placeholder="Password">
-                                    <label for="floatingPassword">IMAGE</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input  class="form-control" id="floatingInput" name="brand"
-                                        placeholder="Brand">
-                                    <label for="floatingInput">BRAND</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="number" class="form-control" type="number" placeholder="Price" name="price" id="price" oninput="validateProductPrice()">
-                                    <label for="floatingInput">Price</label>
-                                    <span class="text-danger d-flex justify-content-center align-items-center" id="priceError"></span>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="floatingSelect"  placeholder="Size" name="size"
-                                        aria-label="Floating label select example">
-                                        <option value="5">UK 5</option>
-                                        <option value="5.5">UK 5.5</option>
-                                        <option value="6">UK 6</option>
-                                        <option value="6.5">UK 6.5</option>
-                                        <option value="7">UK 7</option>
-                                        <option value="7.5">UK 7.5</option>
-                                        <option value="8">UK 8</option>
-                                        <option value="8.5">UK 8.5</option>
-                                        <option value="9">UK 9</option>
-                                        <option value="9.5">UK 9.5</option>
-                                        <option value="10">UK 10</option>
-                                        <option value="10.5">UK 10.5</option>
-                                        <option value="11">UK 11</option>
-                                        <option value="11.5">UK 11.5</option>
-                                            
-                                    </select>
-                                    <label for="floatingSelect">SIZE</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingInput"
-                                    placeholder="Color" name="color">
-                                    <label for="floatingInput">COLOR</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="number" class="form-control" placeholder="Stock" name="stock" id="stock" oninput="validateProductStock()">
-                                    <label for="floatingInput">STOCK</label>
-                                    <span class="text-danger d-flex justify-content-center align-items-center" id="stockError"></span>
-                                </div>
-                             
-                                <button class="buttons btn btn-primary w-50 justify-content-center text-center m-2" type="submit" id="submitButton" disabled>ADD</button>
-                            </form>
-
-                        </div>
+            <div class="container-fluid pt-4">
+                <div class="row justify-content-center">
+                  <div class="col-sm-12 col-xl-6">
+                    <div class="bg-light rounded h-100 p-4">
+                      <h6 class="mb-4">CREATE BANNER</h6>
+                      <form action="/admin/addBanner" method="post" enctype="multipart/form-data">
+                        <input class="w-50 mx-auto my-3 form-control" type="text" placeholder="Banner title" name="title" id="title" oninput="validateBannerTitle()">
+                    <span class="text-danger d-flex justify-content-center align-items-center" id="titleError"></span>
+                    <input class="w-50 mx-auto my-3 form-control" type="text" placeholder="Banner description" name="description" id="description" oninput="validateBannerDescription()">
+                    <span class="text-danger d-flex justify-content-center align-items-center" id="descriptionError"></span>
+                    <input class="w-50 mx-auto my-3 form-control" type="file" name="image" required>
+                    <button class="w-50 login mx-auto my-3 form-control" type="submit" id="submitButton" disabled>ADD</button>
+                      </form>
                     </div>
-
-
+                  </div>
                 </div>
-            </div>
+              </div>
+              
           
         </div>
         <!-- Content End -->
@@ -233,7 +159,8 @@
     </div>
 
     <!-- JavaScript Libraries -->
-
+  
+      <script src="/javascripts/validation Bannercreate.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/admin/lib/chart/chart.min.js"></script>
@@ -243,7 +170,7 @@
     <script src="/admin/lib/tempusdominus/js/moment.min.js"></script>
     <script src="/admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="/admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="/javascripts/validation Prodcreate.js"></script>
+    
 
     <!-- Template Javascript -->
     <script src="/admin/js/main.js"></script>

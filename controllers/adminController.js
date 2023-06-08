@@ -200,26 +200,41 @@ const createProduct = async (req, res) => {
     }
 };
 const addNewProduct = async (req, res) => {
-    const images = req.files.map((file) => {
-        return file.filename;
-    });
-    const productData = new Product({
-        productName: req.body.name,
-        price: req.body.price,
-        offerPrice: req.body.price,
-        description: req.body.description,
-        category: req.body.category,
-        imageUrl: images,
-        brand: req.body.brand,
-        size: req.body.size,
-        color: req.body.color,
-        stock: req.body.stock,
-        isDeleted: false,
-    });
-    await productData.save()
-        .then((response) => {
-            res.redirect("/admin/productlist");
-        })
+    try {
+        const categoryData = await Category.find({});
+        const productName = req.body.name
+        const upperProductName = productName.toUpperCase();
+        const productExist = await Product.findOne({ productName: upperProductName });
+        if (!productExist) {
+            const images = req.files.map((file) => {
+                return file.filename;
+            });
+            const productData = new Product({
+                productName: req.body.name,
+                price: req.body.price,
+                offerPrice: req.body.price,
+                description: req.body.description,
+                category: req.body.category,
+                imageUrl: images,
+                brand: req.body.brand,
+                size: req.body.size,
+                color: req.body.color,
+                stock: req.body.stock,
+                isDeleted: false,
+            });
+            await productData.save()
+                .then((response) => {
+                    res.redirect("/admin/productlist");
+                })
+        } else {
+            res.render("adminProdCreate", {
+                category: categoryData, text: "Product with same name exist already"
+            });
+
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 

@@ -40,9 +40,20 @@ const productSchema = new Schema({
     type: Boolean,
     required: false,
   },
+  isCategoryDeleted: {
+    type: Boolean,
+    default: false,
+  },
   stock: {
     type: Number,
     required: true,
-  }
+  },
+  offerPrice: {
+    type: Number,
+  },
+  offerPercentage: {
+    type: Number,
+    default:0,
+  },
 });
 module.exports = mongoose.model("Product", productSchema);

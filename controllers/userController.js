@@ -5,6 +5,7 @@ const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
 const Cart = require("../models/cartModel");
 const Order = require("../models/orderModel");
+const Banner = require('../models/bannerModel');
 const Wishlist = require("../models/wishlistModel");
 
 const { ObjectId } = require("mongodb");
@@ -12,6 +13,7 @@ const { ObjectId } = require("mongodb");
 const homeload = async (req, res) => {
   try {
     const category = await Category.find();
+    const bannerData = await Banner.find();
  
     const lastAddedProducts = await Product.find({ isDeleted: false})
     .sort({ _id: -1 })
@@ -20,9 +22,9 @@ const homeload = async (req, res) => {
     if (req.session.user) {
       const userId = req.session.user;
       userData = await User.findOne({ _id: userId });
-      res.render("home", { userData, data: category, lastAddedProducts });
+      res.render("home", { userData, data: category,bannerData, lastAddedProducts });
     } else {
-      res.render("home", { data: category, lastAddedProducts });
+      res.render("home", { data: category,bannerData, lastAddedProducts });
     }
   } catch (error) {
     console.log(error.message);
@@ -221,6 +223,7 @@ const verifyLogin = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const user = await User.findOne({ email: email });
+    const bannerData = await Banner.find();
     if (user) {
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
@@ -232,7 +235,7 @@ const verifyLogin = async (req, res) => {
           const lastAddedProducts = await Product.find({ isDeleted: false })
             .sort({ _id: -1 })
             .limit(5);
-          res.render("home", {userData: user,data: CategoryList,lastAddedProducts});
+          res.render("home", {userData: user,bannerData: bannerData,data: CategoryList,lastAddedProducts});
         }
 
       } else {
@@ -679,8 +682,11 @@ const resettingPassword = async (req, res) => {
           ];
           await Cart.bulkWrite(updates)
           const cartDocs = await Cart.findOne({ _id: cartId });
-      const items = cartDocs.item.find((i) => i._id.toString() === itemId);
-          res.json({ success: true,qty:items.quantity });
+          const items = cartDocs.item.find((i) => i._id.toString() === itemId);
+        
+       console.log(items);
+      
+          res.json({ success: true,qty:items.quantity,totalprice:cartDoc.totalPrice});
         }
       }
     } catch (error) {
