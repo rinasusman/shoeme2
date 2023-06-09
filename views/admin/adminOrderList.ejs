@@ -86,11 +86,19 @@
                     <div class="nav-item dropdown">
                         <a href="/admin/offerlist" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Offers</a>
                         <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/offerlist" class="dropdown-item">Offers</a>
                             <a href="/admin/productOfferCreate" class="dropdown-item">Create Product Offer</a>
-                            <a href="/admin/prodCreate" class="dropdown-item">Add Product</a>
+                            <a href="/admin/categoryOfferCreate" class="dropdown-item">Create Category Offer</a>
                         </div>
                     </div>
-                    <a href="" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Coupons</a>
+                    <div class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Coupons</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/couponlist" class="dropdown-item">Coupon</a>
+                            <a href="/admin/couponCreate" class="dropdown-item">Create Coupon</a>
+                           
+                        </div>
+                    </div>
                     
                 </div>
             </nav>
@@ -152,14 +160,14 @@
                           <div class="table-responsive">
                               <table class="table" id="myTable">
                                   <thead>
-                                      <tr>
-                                          <th scope="col">ORDER ID</th>
-                                          <th scope="col">PRODUCT NAME</th>
-                                          <th scope="col">QUANTITY</th>
-                                          <th scope="col">PRICE</th>
-                                          <th scope="col">PAYMENT TYPE</th>
-                                          <th scope="col">TOTAL PRICE</th>
-                                          <th scope="col">ORDER STATUS</th>
+                                      <tr >
+                                          <th style="font-size: smaller;" scope="col">ORDER ID</th>
+                                          <th style="font-size: smaller;"  scope="col">PRODUCT NAME</th>
+                                          <th style="font-size: smaller;"  scope="col">QUANTITY</th>
+                                          <th style="font-size: smaller;"  scope="col">PRICE</th>
+                                          <th style="font-size: smaller;"  scope="col">PAYMENT TYPE</th>
+                                          <th style="font-size: smaller;"  scope="col">TOTAL PRICE</th>
+                                          <th style="font-size: smaller;"  scope="col">ORDER STATUS</th>
                                       </tr>
                                   </thead>
                                   <tbody>

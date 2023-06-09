@@ -48,7 +48,8 @@ userRoute.get("/cart",auth.userLogin,userController.loadCart);
 userRoute.get('/addToCart/:id',auth.userLogin, userController.addToCart);
 userRoute.post("/removeCartItem",auth.userLogin, userController.removeCartItem);
 userRoute.post('/decrementOrIncrementCart',auth.userLogin, userController.decrementOrIncrementCart);
-
+userRoute.post('/applyCoupon',auth.userLogin, userController.applyCoupon);
+userRoute.post('/cancelSelection',auth.userLogin, userController.cancelSelection);
 //======================================================//
 //============== wishlist management ==================//
 userRoute.get("/wishlist",auth.userLogin,userController.loadWishlist);
@@ -59,6 +60,7 @@ userRoute.get('/addToCartFromWishlist/:id',auth.userLogin, userController.addToC
 
 //============== payment management ==================//
 userRoute.get('/checkout',auth.userLogin, userController.loadCheckOut);
+userRoute.post('/createRP',auth.userLogin, userController.createRP);
 userRoute.post("/addAddress", auth.userLogin, userController.addAddress);
 userRoute.post("/placeOrder", auth.userLogin, userController.placeOrder);
 userRoute.get("/placeOrder", auth.userLogin, userController.placeOrder);

@@ -101,11 +101,16 @@ crossorigin="anonymous"></script>
 										₹<%= userData.wallet %> 
 									</span>
 								</div>
-								
+								<div class="user-field">
+									<label for="referral">Referral Code:</label>
+									<span id="phone">
+										<%= userData.referral %>
+									</span>
+								</div>
 								<!-- Hidden Popup -->
 								<div id="editNamePopup" class="popup" style="display: none;">
 									<div class="popup-content">
-										<h2>Edit Username</h2>
+										<h4>Edit Username</h4>
 										<form id="editNameForm" action="/editName" method="POST">
 											<label for="newName">New Name:</label>
 											<input type="text" id="newName" name="newName" oninput="validateName()">
@@ -119,7 +124,7 @@ crossorigin="anonymous"></script>
 								<!-- Hidden Popup -->
 								<div id="editEmailPopup" class="popup" style="display: none;">
 									<div class="popup-content">
-										<h2>Edit Email ID</h2>
+										<h4>Edit Email ID</h4>
 										<form id="editEmailForm" action="/editEmail" method="POST">
 											<label for="newEmail">New Email ID:</label>
 											<input type="email" id="newEmail" name="newEmail" oninput="validateEmail()">
@@ -133,7 +138,7 @@ crossorigin="anonymous"></script>
 								<!-- Hidden Popup -->
 								<div id="editNumberPopup" class="popup" style="display: none;">
 									<div class="popup-content">
-										<h2>Edit Phone Number</h2>
+										<h4>Edit Phone Number</h4>
 										<form id="editNumberForm" action="/editNumber" method="POST">
 											<label for="newNumber">New Number:</label>
 											<input type="number" id="newNumber" name="newNumber"
@@ -186,52 +191,67 @@ crossorigin="anonymous"></script>
 						</div>
 					</div>
 
-					<div class="col-md-6 col-sm-3">
-						<div class="billing-details">
-							<div class="section-title">
-								<h3 class="title">Add Address</h3>
-							</div>
-							<form action="/addAddressFromProfile" method="post">
-								<div class="form-group">
-									<input class="input" type="text" name="fullname" id="aName" placeholder="Full Name"
-										oninput="validateAName()">
-									<span id="aNameError" style="color: red;"></span>
-								</div>
-								<div class="form-group">
-									<input class="input" type="email" name="email" id="aEmail" placeholder="Email"
-										oninput="validateAEmail()">
-									<span id="aEmailError" style="color: red;"></span>
-								</div>
-								<div class="form-group">
-									<input class="input" type="text" name="address" id="address" placeholder="Address"
-										oninput="validateAddress()">
-									<span id="addressError" style="color: red;"></span>
-								</div>
 
-								<div class="form-group">
-									<input class="input" type="text" name="city" id="city" placeholder="City"
-										oninput="validateCityName()">
-									<span id="cityNameError" style="color: red;"></span>
-								</div>
-								<div class="form-group">
-									<input class="input" type="text" name="country" id="countryName"
-										placeholder="Country" oninput="validateCountryName()">
-									<span id="countryNameError" style="color: red;"></span>
-								</div>
-								<div class="form-group">
-									<input class="input" type="text" name="pin" id="pin" placeholder="PIN Code"
-										oninput="validatePinCode()">
-									<span id="pinError" style="color: red;"></span>
-								</div>
-								<div class="form-group">
-									<input class="input" type="tel" name="tel" id="aNumber" placeholder="Telephone"
-										oninput="validateAMobile()">
-									<span id="aNumberError" style="color: red;"></span>
-								</div>
-								<input type="submit" Id="aSubmitButton" name="aSubmitButton" value="Add Address"
-									class="btn btn-block btn-danger">
-							</form>
+					<div class="col-md-6 col-sm-3">
+					<div class="accordion accordion-flush" style="background-color: aqua;" id="accordionFlushExample">
+						<div class="accordion-item">
+						  <h2 class="accordion-header" id="flush-headingOne">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+							  <h3>ADD ADDRESS</h3>
+							</button>
+						  </h2>
+						  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body"><div class="billing-details">
+								
+								<form action="/addAddressFromProfile" method="post">
+									<div class="form-group">
+										<input class="input" type="text" name="fullname" id="aName" placeholder="Full Name"
+											oninput="validateAName()">
+										<span id="aNameError" style="color: red;"></span>
+									</div>
+									<div class="form-group">
+										<input class="input" type="email" name="email" id="aEmail" placeholder="Email"
+											oninput="validateAEmail()">
+										<span id="aEmailError" style="color: red;"></span>
+									</div>
+									<div class="form-group">
+										<input class="input" type="text" name="address" id="address" placeholder="Address"
+											oninput="validateAddress()">
+										<span id="addressError" style="color: red;"></span>
+									</div>
+	
+									<div class="form-group">
+										<input class="input" type="text" name="city" id="city" placeholder="City"
+											oninput="validateCityName()">
+										<span id="cityNameError" style="color: red;"></span>
+									</div>
+									<div class="form-group">
+										<input class="input" type="text" name="country" id="countryName"
+											placeholder="Country" oninput="validateCountryName()">
+										<span id="countryNameError" style="color: red;"></span>
+									</div>
+									<div class="form-group">
+										<input class="input" type="text" name="pin" id="pin" placeholder="PIN Code"
+											oninput="validatePinCode()">
+										<span id="pinError" style="color: red;"></span>
+									</div>
+									<div class="form-group">
+										<input class="input" type="tel" name="tel" id="aNumber" placeholder="Telephone"
+											oninput="validateAMobile()">
+										<span id="aNumberError" style="color: red;"></span>
+									</div>
+									<input type="submit" Id="aSubmitButton" name="aSubmitButton" value="Add Address"
+										class="btn btn-block btn-danger">
+								</form>
+							</div></div>
+						  </div>
 						</div>
+					
+					  </div>
+
+
+
+						
 					</div>
 				</div>
 			</div>

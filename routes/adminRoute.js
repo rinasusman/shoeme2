@@ -5,6 +5,7 @@ const adminRoute = express();
 const adminController = require("../controllers/adminController")
 const bannerController = require("../controllers/bannerController");
 const offerController = require("../controllers/offerController");
+const couponController = require("../controllers/couponController");
 
 const auth = require("../middleware/auth");
 const store = require('../helpers/multer')
@@ -20,6 +21,7 @@ adminRoute.get('/dashboard', auth.adminLogin, adminController.dashboardload);
 
 // ================ user management ================//
 adminRoute.get('/userlist', auth.adminLogin, adminController.userlistload);
+adminRoute.get('/orderlist', auth.adminLogin, adminController.orderlistload);
 adminRoute.post("/blockUnblockUser", auth.adminLogin, adminController.userBlockUnblock);
 adminRoute.post("/userorderList", auth.adminLogin, adminController.userorderList);
 adminRoute.post("/updateStatus", auth.adminLogin, adminController.updateStatus)
@@ -61,6 +63,14 @@ adminRoute.post('/editProduct', auth.adminLogin, store.array('image', 3), adminC
 adminRoute.get('/productUnlist/:id', auth.adminLogin, adminController.unlistProduct);
 adminRoute.get('/productList/:id', auth.adminLogin, adminController.listProduct);
 //======================================================//
+//============== coupon management ==================//
+adminRoute.get("/couponlist", auth.adminLogin, couponController.couponlistload);
+adminRoute.get("/couponCreate", auth.adminLogin, couponController.couponCreate);
+adminRoute.post("/couponCreate", auth.adminLogin, couponController.addCoupon);
+adminRoute.get("/couponDelete/:id", auth.adminLogin, couponController.deleteCoupon);
+
+//======================================================//
+
 
 adminRoute.get('/adminLogout', adminController.handleLogout);
 

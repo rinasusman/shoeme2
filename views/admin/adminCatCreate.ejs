@@ -87,11 +87,19 @@
                     <div class="nav-item dropdown">
                         <a href="/admin/offerlist" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Offers</a>
                         <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/offerlist" class="dropdown-item">Offers</a>
                             <a href="/admin/productOfferCreate" class="dropdown-item">Create Product Offer</a>
-                            <a href="/admin/prodCreate" class="dropdown-item">Add Product</a>
+                            <a href="/admin/categoryOfferCreate" class="dropdown-item">Create Category Offer</a>
                         </div>
                     </div>
-                    <a href="" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Coupons</a>
+                    <div class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Coupons</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/couponlist" class="dropdown-item">Coupon</a>
+                            <a href="/admin/couponCreate" class="dropdown-item">Create Coupon</a>
+                           
+                        </div>
+                    </div>
                     
                 </div>
             </nav>
@@ -144,23 +152,15 @@
                     <div class="bg-light rounded h-100 p-4">
                       <h6 class="mb-4">CREATE CATEGORY</h6>
                       <form action="/admin/addCategory" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                          <input class="form-control" type="text" placeholder="Category Name" name="name" id="name" oninput="validateCategoryName()">
-                          <span class="text-danger d-flex justify-content-center align-items-center" id="nameError"></span>
+                        <input class="w-50 mx-auto my-3 form-control" type="text" placeholder="Category Name" name="name" id="name" oninput="validateCategoryName()">
+                        <span class="text-danger d-flex justify-content-center align-items-center" id="nameError"></span>
+                        <div class="text-center">
+                            <img id="imagePreview" src="#" alt="Selected Image" style="display: none; max-width: 10%; height: auto; margin: 10px auto;">
                         </div>
-                        <br>
-                        <div class="form-group text-center">
-                          <img id="imagePreview" src="#" alt="Selected Image" style="display: none;">
-                        </div>
-                        <br>
-                        <div class="form-group">
-                          <input class="form-control" type="file" name="image" required onchange="previewImage(event)">
-                        </div>
-                        <br>
-                        <div class="form-group">
-                          <button class="form-control login bg-primary text-white" id="submitButton" disabled type="submit">ADD</button>
-                        </div>
-                      </form>
+                        <input class="w-50 mx-auto my-3 form-control" type="file" name="image" required onchange="previewImage(event)">
+                        <button class="w-50 login mx-auto my-3 form-control" id="submitButton" disabled type="submit">ADD</button>
+                    </form>
+                 
                     </div>
                   </div>
                 </div>
@@ -203,7 +203,7 @@
     <script src="/admin/lib/tempusdominus/js/moment.min.js"></script>
     <script src="/admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="/admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="/javascripts/validation Prodcreate.js"></script>
+
 
     <!-- Template Javascript -->
     <script src="/admin/js/main.js"></script>

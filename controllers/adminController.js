@@ -76,7 +76,7 @@ const userlistload = async (req, res) => {
         const page = parseInt(req.query.page, 10) || 1;
         const search = req.query.search
 
-        const limit = 3;
+        const limit = 5;
         const skip = (page - 1) * limit;
 
         const query = {};
@@ -98,6 +98,33 @@ const userlistload = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
+    }
+};
+const orderlistload = async (req, res) => {
+    try {
+        
+        const orders = await Order.aggregate([
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "item.product",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+            {
+                $sort: { _id: -1 }
+            }
+        ]);
+        if (orders.length != 0) {
+            res.render("adminAllorder", { orderDatas: orders, text: "" });
+        } else {
+            res.render("adminAllorder", { orderDatas: orders, text: "No orders placed" });
+        }
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error retrieving order details.");
     }
 };
 const userBlockUnblock = (req, res) => {
@@ -482,5 +509,6 @@ module.exports = {
     unlistCategory,
     editCategoryPageLoad,
     updateStatus,
-    userorderList
+    userorderList,
+    orderlistload
 }
