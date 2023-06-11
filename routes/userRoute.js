@@ -67,7 +67,9 @@ userRoute.get("/placeOrder", auth.userLogin, userController.placeOrder);
 userRoute.post("/checkOrder", auth.userLogin, userController.placeOrder);
 //============== order management ==================//
 userRoute.get("/orders", auth.userLogin,userController.orderData);
+userRoute.get('/login/orderdetails/:id', userController.orderDatas);
 userRoute.post('/cancelOrder',  auth.userLogin,userController.cancelOrder);
+userRoute.post('/returnOrder',  auth.userLogin,userController.returnOrder);
 //======================================================//
 
 

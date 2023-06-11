@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Shoeme</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Colo Shop Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="/template/styles/bootstrap4/bootstrap.min.css">
+  <link href="/template/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+  <link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/animate.css">
+  <link rel="stylesheet" href="/template/plugins/themify-icons/themify-icons.css">
+  <link rel="stylesheet" type="text/css" href="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="/template/styles/single_styles.css">
+  <link rel="stylesheet" type="text/css" href="/template/styles/single_responsive.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <!-- Bootstrap -->
+  <link type="text/css" rel="stylesheet" href="/main/css/bootstrap.min.css" />
+
+  <!-- Slick -->
+  <link type="text/css" rel="stylesheet" href="/main/css/slick.css" />
+  <link type="text/css" rel="stylesheet" href="/main/css/slick-theme.css" />
+
+  <!-- nouislider -->
+  <link type="text/css" rel="stylesheet" href="/main/css/nouislider.min.css" />
+
+  <!-- Font Awesome Icon -->
+  <link rel="stylesheet" href="/main/css/font-awesome.min.css">
+
+  <!-- Custom stlylesheet -->
+  
+  <style>
+    /* Styling for the table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    /* Styling for the table header */
+    thead th {
+      background-color: #f5f5f5;
+      text-align: left;
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    /* Styling for alternating table rows */
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    /* Styling for table cells */
+    td {
+      padding: 10px;
+    }
+
+    /* Styling for the cancel button */
+    .btn-danger {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .card {
+      box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #fff;
+      background-clip: border-box;
+      border: 0 solid rgba(0, 0, 0, .125);
+      border-radius: 1rem;
+    }
+
+    .text-reset {
+      --bs-text-opacity: 1;
+      color: inherit !important;
+    }
+
+    a {
+      color: #5465ff;
+      text-decoration: none;
+    }
+    .zoomable {
+  cursor: zoom-in;
+}
+
+.zoomed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zoomed img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+
+  </style>
+
+
+
+</head>
+
+<body>
+
+  <div class="super_container">
+
+    <!-- Header -->
+
+    <%-include('userloged') %>
+
+
+      <div id="breadcrumb" class="section">
+        <!-- container -->
+        <div class="container">
+          <!-- row -->
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="breadcrumb-header">Order Details</h3>
+            </div>
+          </div>
+          <!-- /row -->
+        </div>
+        <!-- /container -->
+      </div>
+      <div class="container-fluid">
+
+        <div class="container">
+          <!-- Title -->
+          <% orderData.forEach((i)=> { %>
+            <div class="d-flex justify-content-between align-items-center py-3">
+              <h2 class="h5 mb-0"><a href="#" class="text-muted" style="font-weight: bold;"></a> Order #<%= i._id %>
+              </h2>
+            </div>
+
+            <!-- Main content -->
+            <div class="row">
+              <div class="col-lg-8">
+                <!-- Details -->
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <div class="mb-3 d-flex justify-content-between">
+                      <div>
+                        <span class="me-3">
+                          <%= i.orderDate %>
+                        </span>
+                        <span class="me-3">#<%= i._id %></span>
+
+                        <span class="badge rounded-pill bg-info">
+                          <%= i.status %>
+                        </span>
+                      </div>
+                      <div class="d-flex">
+                        <!-- <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i class="bi bi-download"></i> <span class="text">Invoice</span></button> -->
+
+                      </div>
+                    </div>
+                    <table class="table table-borderless">
+                      <tbody>
+                        <% i.productDetails.forEach((j)=> { %>
+                          <tr>
+                            <td>
+
+                              <div class="d-flex mb-2">
+                                <div class="flex-shrink-0">
+                                  <img src="/images/uploads/<%= j.imageUrl[0] %>" alt="" width="35" class="img-fluid zoomable">
+                                </div>
+                                <div class="flex-lg-grow-1 ms-3">
+                                  <h6 class="small mb-0"><a href="#" class="text-reset">
+                                      <%= j.productName %>
+                                    </a></h6>
+                                  <span class="small">Color:  <%= j.color %></span>
+                                  <br>
+                                  <span class="small">Size:  <%= j.size %></span>
+                                </div>
+                              </div>
+                            </td>
+                          
+                            <td>
+                           
+                            </td>
+                           
+                                <td class="text-end">
+                                   ₹<%= j.price %>
+                              
+                                </td>
+                          </tr>
+                          <% }); %>
+
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colspan="2">Subtotal</td>
+                          <td class="text-end">₹<%= i.totalPrice %></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">Shipping</td>
+                          <td class="text-end">Free</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"></td>
+                          <td class="text-danger text-end"></td>
+                        </tr>
+                        <tr class="fw-bold">
+                          <td colspan="2">TOTAL</td>
+                          <td class="text-end text-danger">₹<%= i.totalPrice %></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <!-- Payment -->
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <h3 class="h6">Payment Method</h3>
+                        <p><%= i.paymentType %> <br>
+                          ₹<%= i.totalPrice %> </p>
+                      </div>
+                      <div class="col-lg-6">
+                        <h3 class="h6">Billing address</h3>
+                        <% userData.address.forEach((i, index)=> { %>
+                          <address>
+                            <strong> <%= i.fullname %></strong><br>
+                            <%= i.address %>, <%= i.city %><br>
+                            <%= i.country %>,  <%= i.pin %><br>
+                            <abbr title="Phone">P:</abbr>  <%= i.tel %>
+                          </address>
+                        <% }) %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <!-- Customer Notes -->
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h3 class="h6">Expected Delivery Date:</h3>
+                    <p><%= i.deliveryDate %></p>
+                    <% if (i.status==='Placed' || i.status==='Shipping' || i.status==='Dispatched' )
+                                  { %>
+                                  <button class="btn btn-danger"
+                                    onclick="cancelOrder('<%= i._id %>')">Cancel</button>
+                                    <% } if (i.status==='Delivered') 
+                                    { %>
+                                      <button class="btn btn-danger"
+                                      onclick="returnOrder('<%= i._id %>')">Return</button>
+                                      <% } %>
+                  </div>
+                </div>
+                <div class="card mb-4">
+                  <!-- Shipping information -->
+                  <div class="card-body">
+                    <h3 class="h6">Shipping Information</h3>
+                    <strong>ShoeME</strong>
+                    <span><a href="#" class="" target="_blank"><%= i._id %></a> <i
+                        class="bi bi-box-arrow-up-right"></i> </span>
+                    <hr>
+                    <h3 class="h6">Shipping Address</h3>
+                    <% userData.address.forEach((i, index)=> { %>
+                      <address>
+                        <strong> <%= i.fullname %></strong><br>
+                        <%= i.address %>, <%= i.city %><br>
+                        <%= i.country %>,  <%= i.pin %><br>
+                        <abbr title="Phone">P:</abbr>  <%= i.tel %>
+                      </address>
+                    <% }) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <% }); %>
+      </div>
+      <!-- /container -->
+  </div>
+
+  <!-- Tabs -->
+
+
+  <!-- Benefit -->
+
+  <div class="benefit">
+    <div class="container">
+      <div class="row benefit_row">
+        <div class="col-lg-3 benefit_col">
+          <div class="benefit_item d-flex flex-row align-items-center">
+            <div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+            <div class="benefit_content">
+              <h6>free shipping</h6>
+              <p>Suffered Alteration in Some Form</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 benefit_col">
+          <div class="benefit_item d-flex flex-row align-items-center">
+            <div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+            <div class="benefit_content">
+              <h6>cach on delivery</h6>
+              <p>The Internet Tend To Repeat</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 benefit_col">
+          <div class="benefit_item d-flex flex-row align-items-center">
+            <div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+            <div class="benefit_content">
+              <h6>45 days return</h6>
+              <p>Making it Look Like Readable</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 benefit_col">
+          <div class="benefit_item d-flex flex-row align-items-center">
+            <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+            <div class="benefit_content">
+              <h6>opening all week</h6>
+              <p>8AM - 09PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+
+
+
+  <!-- Footer -->
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div
+            class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+            <ul class="footer_nav">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="contact.html">Contact us</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+            <ul>
+              <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="footer_nav_container">
+            <div class="cr">©2023 All Rights Reserverd. This template is made with <i class="fa fa-heart-o"
+                aria-hidden="true"></i> by <a href="#">Rinas</a> &amp; distributed by <a href="">Shoeme</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  </div>
+
+  <script>
+  function cancelOrder(orderId) {
+			fetch(`/cancelOrder?orderId=${orderId}`, {
+			  method: "post",
+			  headers: {
+				"Content-Type": "application/json",
+			  },
+			})
+			  .then((response) => {
+				if (response.ok) {
+				 location.reload()
+				} else {
+				  
+				}
+			  })
+			  .catch((error) => {
+				
+			  });
+		  }
+
+  </script>
+  <script>
+    function returnOrder(orderId) {
+      fetch(`/returnOrder?orderId=${orderId}`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            location.reload()
+          } else {
+
+          }
+        })
+        .catch((error) => {
+
+        });
+    }
+    
+    
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+  var images = document.querySelectorAll('.zoomable');
+  
+  images.forEach(function(image) {
+    image.addEventListener('click', function() {
+      var zoomedContainer = document.createElement('div');
+      zoomedContainer.className = 'zoomed';
+      
+      var zoomedImage = document.createElement('img');
+      zoomedImage.src = this.src;
+      
+      zoomedContainer.appendChild(zoomedImage);
+      document.body.appendChild(zoomedContainer);
+      
+      zoomedContainer.addEventListener('click', function() {
+        this.remove();
+      });
+    });
+  });
+});
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="/template/js/jquery-3.2.1.min.js"></script>
+  <script src="/template/styles/bootstrap4/popper.js"></script>
+  <script src="/template/styles/bootstrap4/bootstrap.min.js"></script>
+  <script src="/template/plugins/Isotope/isotope.pkgd.min.js"></script>
+  <script src="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+  <script src="/template/plugins/easing/easing.js"></script>
+  <script src="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+  <script src="/template/js/single_custom.js"></script>
+  <script src="/main/js/jquery.min.js"></script>
+  <script src="/main/js/bootstrap.min.js"></script>
+  <script src="/main/js/slick.min.js"></script>
+  <script src="/main/js/nouislider.min.js"></script>
+  <script src="/main/js/jquery.zoom.min.js"></script>
+  <script src="/main/js/main.js"></script>
+
+</body>
+
+</html>

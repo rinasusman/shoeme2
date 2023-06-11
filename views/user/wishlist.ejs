@@ -84,14 +84,15 @@
 										<table class="table">
 											<thead>
 												<tr>
-													    <th scope="col">Product</th>
-														<th scope="col">Name</th>
-														<th scope="col">Description</th>
-														<th scope="col">Brand</th>
-														<th scope="col">Color</th>
-														<th scope="col">Size</th>
-														<th scope="col">Price</th>
-														<th scope="col">Actions</th>
+													    <th scope="col">PRODUCT</th>
+														<th scope="col">NAME</th>
+														<th scope="col">DESCRIPTION</th>
+														<th scope="col">BRAND</th>
+														<th scope="col">COLOR</th>
+														<th scope="col">SIZE</th>
+														<th scope="col">PRICE</th>
+														<th scope="col"></th>
+														<th scope="col"></th>
 													<th scope="col"></th>
 												</tr>
 											</thead>
@@ -134,7 +135,7 @@
 														<td class="product-remove">
 															<h5 class="product-price"
 																	id="total-price-<%= i.item._id %>">
-																	<%= i.item.product.price %>₹
+																	₹<%= i.item.product.price %>
 																</h5>
 														</td>
 														<td class="product-remove">
@@ -142,13 +143,19 @@
 																<button class="btn btn-danger"
 																	onclick="removeWishlistItem('<%= i.item.product._id %>')">Remove
 																	From Wishlist</button>
+															
+															</div>
+														</td>
+														<td class="product-remove">
+															<div class="actions">
 																<button class="btn btn-primary">
-																	<a
+																	<a class="text-white"
 																		href="/addToCartFromWishlist/<%= i.item.product._id %>">Add
 																		to cart</a>
 																</button>
 															</div>
 														</td>
+														
 														
 													</tr>
 												<% }); %>

@@ -192,30 +192,83 @@ const addNewCategory = async (req, res) => {
 };
 const prodlistload = async (req, res) => {
     try {
-        const productData = await Product.aggregate([
-            {
-                $lookup: {
-                    from: "categories",
-                    localField: "category",
-                    foreignField: "_id",
-                    as: "category",
+        const page = parseInt(req.query.page, 10) || 1;
+        const search = req.query.search;
+        const limit = 4;
+        const skip = (page - 1) * limit;
+        let query = [
+                    {
+                        $lookup: {
+                            from: "categories",
+                            localField: "category",
+                            foreignField: "_id",
+                            as: "category",
+                        },
+                    },
+                    {
+                        $unwind: "$category",
+                    },
+                    {
+                        $sort: { _id: -1 },
+                    },
+                    {
+                        $skip: skip,
+                    },
+                    {
+                        $limit: limit,
+                    },
+                ];
+        const countquery = {};
+        if (search) {
+            countquery.productName= { $regex: search, $options: "i" };
+            query = [
+                {
+                    $lookup: {
+                        from: "categories",
+                        localField: "category",
+                        foreignField: "_id",
+                        as: "category",
+                    },
                 },
-            },
-            {
-                $unwind: "$category",
-            }, 
-        ]);
-        if (productData.length > 0) {
-            await res.render("adminProdList", { data: productData, text: "" });
-        } else {
-            await res.render("adminProdList", { data: productData, text: "No products have been added" });
+                {
+                    $unwind: "$category",
+                },
+                {
+                    $match: {
+                      $expr: {
+                        $regexMatch: {
+                          input: "$productName",
+                          regex: search,
+                          options: "i",
+                        },
+                      },
+                    },
+                  },
+                {
+                    $sort: { _id: -1 },
+                },
+                {
+                    $skip: skip,
+                },
+                {
+                    $limit: limit,
+                },
+            ];;
         }
-
-    }
-    catch (error) {
+        const totalProducts = await Product.countDocuments(countquery);
+        const productData = await Product.aggregate(query);
+        const totalPages = Math.ceil(totalProducts / limit);
+        if (productData.length > 0) {
+            res.render("adminProdList", { data: productData, text: "", totalPages, page, search });
+        } else {
+            res.render("adminProdList", { data: productData, text: "No products found", totalPages, page, search });
+        }
+    } catch (error) {
         console.log(error.message);
+        res.status(500).send("Internal Server Error");
     }
 };
+
 const createProduct = async (req, res) => {
     try {
         const categoryData = await Category.find({});

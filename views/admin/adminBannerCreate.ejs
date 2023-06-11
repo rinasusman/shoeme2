@@ -61,6 +61,7 @@
                     <a href="/admin/dashboard" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     
                     <a href="/admin/userlist" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Users</a>
+                    <a href="/admin/orderlist" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Orders</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Category</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -82,7 +83,7 @@
                             <a href="/admin/bannerCreate" class="dropdown-item">Add Banner</a>
                         </div>
                     </div>
-                    <a href="" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Orders</a>
+      
                     <div class="nav-item dropdown">
                         <a href="/admin/offerlist" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Offers</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -151,12 +152,12 @@
                     <div class="bg-light rounded h-100 p-4">
                       <h6 class="mb-4">CREATE BANNER</h6>
                       <form action="/admin/addBanner" method="post" enctype="multipart/form-data">
-                        <input class="w-50 mx-auto my-3 form-control" type="text" placeholder="Banner title" name="title" id="title" oninput="validateBannerTitle()">
+                        <input class=" mx-auto my-3 form-control" type="text" placeholder="Banner title" name="title" id="title" oninput="validateBannerTitle()">
                     <span class="text-danger d-flex justify-content-center align-items-center" id="titleError"></span>
-                    <input class="w-50 mx-auto my-3 form-control" type="text" placeholder="Banner description" name="description" id="description" oninput="validateBannerDescription()">
+                    <input class=" mx-auto my-3 form-control" type="text" placeholder="Banner description" name="description" id="description" oninput="validateBannerDescription()">
                     <span class="text-danger d-flex justify-content-center align-items-center" id="descriptionError"></span>
-                    <input class="w-50 mx-auto my-3 form-control" type="file" name="image" required>
-                    <button class="w-50 login mx-auto my-3 form-control" type="submit" id="submitButton" disabled>ADD</button>
+                    <input class=" mx-auto my-3 form-control" type="file" name="image" required>
+                    <button class=" login mx-auto my-3 form-control bg-primary text-white" type="submit" id="submitButton" disabled>ADD</button>
                       </form>
                     </div>
                   </div>

@@ -98,7 +98,11 @@ crossorigin="anonymous"></script>
 					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 						<span class="ti-truck"></span><span>free delivery</span>
 					</div>
-					<div class="product_price">₹<%=data[0].price%></div>
+					<div class="product_price">₹<%=data[0].price%> <% if(data[0].offerPercentage!=0) { %><del
+						class="product-old-price text-dark">
+						₹<%= data[0].offerPrice %> 
+					  </del>
+					  <% }; %></div>
 					<ul class="star_rating">
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -134,7 +138,7 @@ crossorigin="anonymous"></script>
 								<%= data._id %>
 							</p>
 							<a href="/addToCart/<%= data[0]._id %>">add to cart</a></div>
-						<div class="mx-2  d-flex flex-column add_to_cart_button align-items-center justify-content-center"><a href="/addToWishlist/<%= data[0]._id %>">add to wishlist</a></div>
+						<div class="mx-2  d-flex flex-column add_to_cart_button align-items-center justify-content-center red_button" ><a href="/addToWishlist/<%= data[0]._id %>">add to wishlist</a></div>
 					</div>
 					<p class="text-success"><%= text %></p>
 				</div>

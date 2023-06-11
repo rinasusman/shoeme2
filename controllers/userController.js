@@ -1044,6 +1044,37 @@ const orderData = async (req, res) => {
     console.log(error.message);
   }
 };
+const orderDatas = async (req, res) => {
+  if (req.params.id) {
+    try {
+      let userId = new ObjectId(req.session.user);
+      const OrderId = new ObjectId(req.params.id);
+      const user = await User.findOne({ _id: userId });
+      const orderDetails = await Order.aggregate([
+        {
+          $match: { _id: OrderId }
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "item.product",
+            foreignField: "_id",
+            as: "productDetails"
+          }
+        }, {
+          $sort: { _id: -1 }
+        }
+      ]);
+      orderDetails.forEach((order) => {
+        order.orderDate = order.orderDate.toISOString().split("T")[0];
+        order.deliveryDate = order.deliveryDate.toISOString().split("T")[0];
+      });
+      res.render("orderdetails", { userData: user, orderData: orderDetails });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+};
 
 const cancelOrder = async (req, res) => {
   try {
@@ -1069,6 +1100,40 @@ const cancelOrder = async (req, res) => {
     }
     await Product.bulkWrite(updates)
     await Order.updateOne({ _id: orderId }, { $set: { status: "Cancelled" } })
+    res.redirect("/orders");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+const returnOrder = async (req, res) => {
+  try {
+    const orderId = req.query.orderId;
+    let userId = new ObjectId(req.session.user);
+    const user = await User.findOne({ _id: userId });
+    const orderDetails = await Order.findById({ _id: orderId })
+    if (orderDetails.paymentType === 'UPI') {
+      const totalPrice = orderDetails.totalPrice
+      const updatedWallet = parseInt(user.wallet, 10) + parseInt(totalPrice, 10);
+      await User.updateOne({ _id: userId }, { $set: { wallet: updatedWallet } });
+    }
+    if (orderDetails.paymentType === 'COD') {
+      const totalPrice = orderDetails.totalPrice
+      const updatedWallet = parseInt(user.wallet, 10) + parseInt(totalPrice, 10);
+      await User.updateOne({ _id: userId }, { $set: { wallet: updatedWallet } });
+    }
+
+    const updates = []
+    for (let i = 0; i < orderDetails.item.length; i++) {
+      let update = {
+        updateOne: {
+          filter: { _id: orderDetails.item[i].product },
+          update: { $inc: { "stock": orderDetails.item[i].quantity } }
+        }
+      }
+      updates.push(update)
+    }
+    await Product.bulkWrite(updates)
+    await Order.updateOne({ _id: orderId }, { $set: { status: "Return" } })
     res.redirect("/orders");
   } catch (error) {
     console.log(error.message);
@@ -1396,5 +1461,7 @@ module.exports = {
   applyCoupon,
   cancelSelection,
   createRP,
-  checkOrder
+  checkOrder,
+  orderDatas,
+  returnOrder
 }

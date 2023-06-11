@@ -29,6 +29,11 @@
 
     <!-- Template Stylesheet -->
     <link href="/admin/css/style.css" rel="stylesheet">
+    <style>
+        .userListButton{
+  min-width: 90px;
+}
+    </style>
 </head>
 
 <body>
@@ -58,6 +63,7 @@
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="/admin/dashboard" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="/admin/orderlist" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Orders</a>
                     
                     <a href="/admin/userlist" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Users</a>
                     <div class="nav-item dropdown">
@@ -81,7 +87,7 @@
                             <a href="/admin/bannerCreate" class="dropdown-item">Add Banner</a>
                         </div>
                     </div>
-                    <a href="" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Orders</a>
+                
                    
                     <div class="nav-item dropdown">
                         <a href="/admin/offerlist" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Offers</a>
@@ -116,15 +122,12 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                
-                
-                    <form class="d-none d-md-flex ms-4">
-                <input class="form-control border-0  " id="search" name="search" type="text"
-                            placeholder="Username" aria-label="Search" value="<%= search || "" %>">
-                            <br>
-                        <button type="submit" class="btn btn-primary mx-2 border-0"
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control border-0" id="search"  name="search" type="search" placeholder="Search">
+                    <br>
+                    <button type="submit" class="bg-primary text-white" style="border: none; margin-left: 10px; border-radius: 5px;"
                             onclick="event.preventDefault(); searchAndPagination('search')">SEARCH</button>
-                        </form>
+                </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         
