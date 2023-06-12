@@ -25,9 +25,7 @@ const homeload = async (req, res) => {
         if (req.body.email == credential.email && req.body.password == credential.password) {
             req.session.admin = req.body.email;
             const userdata = await User.find();
-
             const orderNumber = await Order.find();
-
             const sumResult = await Order.aggregate([
                 {
                     $group: {
@@ -36,27 +34,64 @@ const homeload = async (req, res) => {
                     }
                 }
             ]);
-
             const currentDate = new Date();
             const dateBefore7Days = new Date(currentDate.getTime() - (7 * 24 * 60 * 60 * 1000));
-           
-            res.render("adminHome", { data: userdata, totalPriceSum: sumResult, orderNumber: orderNumber });
+            const weeklyEarnings = await Order.aggregate([
+                {
+                    $match: {
+                        orderDate: {
+                            $gte: dateBefore7Days,
+                            $lt: currentDate
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        totalPriceSum: { $sum: { $toInt: "$totalPrice" } }
+                    }
+                }
+            ])
+            res.render("adminHome", { data: userdata, totalPriceSum: sumResult, weeklyEarnings: weeklyEarnings, orderNumber: orderNumber });
         }
         else {
             res.render("adminLogin", { title: "Admin Login Page", footer: "Invalid username or password" });
         }
-
     } catch (error) {
         console.log(error.message);
     }
 };
 const dashboardload = async (req, res) => {
     try {
-
         const userdata = await User.find();
-
-       
-        res.render("adminHome", { data: userdata });
+        const orderNumber = await Order.find();
+        const sumResult = await Order.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalPriceSum: { $sum: { $toInt: "$totalPrice" } }
+                }
+            }
+        ]);
+        const currentDate = new Date();
+        const dateBefore7Days = new Date(currentDate.getTime() - (7 * 24 * 60 * 60 * 1000));
+        const weeklyEarnings = await Order.aggregate([
+            {
+                $match: {
+                    orderDate: {
+                        $gte: dateBefore7Days,
+                        $lt: currentDate
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalPriceSum: { $sum: { $toInt: "$totalPrice" } }
+                }
+            }
+        ])
+        res.render("adminHome", { data: userdata, totalPriceSum: sumResult, weeklyEarnings: weeklyEarnings, orderNumber: orderNumber });
     } catch (error) {
         console.log(error.message);
     }

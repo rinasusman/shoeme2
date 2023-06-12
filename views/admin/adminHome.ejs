@@ -152,8 +152,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Users</p>
+                                <h6 class="mb-0"><%= data.length %></h6>
                             </div>
                         </div>
                     </div>
@@ -161,8 +161,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Total Earnings</p>
+                                <h6 class="mb-0"> ₹ <%= totalPriceSum[0].totalPriceSum %></h6>
                             </div>
                         </div>
                     </div>
@@ -170,8 +170,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2" style="font-size: smaller;">Weekly Earnings</p>
+                                <h6 class="mb-0">₹ <%= weeklyEarnings[0].totalPriceSum %></h6>
                             </div>
                         </div>
                     </div>
@@ -179,8 +179,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Total Orders</p>
+                                <h6 class="mb-0"><%= orderNumber.length %></h6>
                             </div>
                         </div>
                     </div>
@@ -190,7 +190,36 @@
 
 
             <!-- Sales Chart Start -->
-        
+            <div style="width: 200px; height: 200px;">
+                <canvas id="myChart"></canvas>
+              </div>
+              
+              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              
+              <script>
+                const ctx = document.getElementById('myChart');
+              
+                new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                      label: '# of Votes',
+                      data: [12, 19, 3, 5, 2, 3],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              </script>
+              
+              
             <!-- Sales Chart End -->
 
 
