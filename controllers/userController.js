@@ -496,6 +496,11 @@ const sortedProductList = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+
+
+
 const prodDetails = async (req, res) => {
   if (req.params.id) {
     try {
@@ -1018,6 +1023,16 @@ const editNumber = async (req, res) => {
 };
 const orderData = async (req, res) => {
   try {
+    const page = parseInt(req.query.page, 10) || 1;
+
+
+  const limit = 5;
+  const skip = (page - 1) * limit;
+  const query = {};
+  const totalorder = await Order.countDocuments(query)
+  console.log(totalorder);
+  const totalPages = Math.ceil(totalorder / limit);
+  
     let userId = new ObjectId(req.session.user);
     const user = await User.findOne({ _id: userId });
     const orderDetails = await Order.aggregate([
@@ -1034,12 +1049,12 @@ const orderData = async (req, res) => {
       }, {
         $sort: { _id: -1 }
       }
-    ]);
+    ]).sort({_id: -1}).skip(skip).limit(limit);
     orderDetails.forEach((order) => {
       order.orderDate = order.orderDate.toISOString().split("T")[0];
       order.deliveryDate = order.deliveryDate.toISOString().split("T")[0];
     });
-    res.render("orders", { userData: user, orderData: orderDetails });
+    res.render("orders", { userData: user, orderData: orderDetails,totalPages, page});
   } catch (error) {
     console.log(error.message);
   }
@@ -1330,6 +1345,7 @@ const getAllProducts = async (req, res) => {
 
   }
 
+
 };
 const applyCoupon = async (req, res) => {
   const userId = req.session.user;
@@ -1463,5 +1479,7 @@ module.exports = {
   createRP,
   checkOrder,
   orderDatas,
-  returnOrder
+  returnOrder,
+ 
+ 
 }

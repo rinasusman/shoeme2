@@ -572,8 +572,80 @@ const updateStatus = async (req, res) => {
         console.log(error.message);
     }
 };
-
-
+const fetchlineChartData = async (req, res) => {
+    try {
+        const processedData = await Order.aggregate([
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: "%Y-%m-%d", date: "$orderDate" }
+                    },
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $sort: {
+                    _id: -1
+                }
+            },
+            {
+                $limit: 6
+            },
+            {
+                $sort: {
+                    _id: 1
+                }
+            }
+        ]);
+        res.json({ result: processedData });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred' });
+    }
+};
+const fetchbarChartData = async (req, res) => {
+    try {
+        const processedData = await Order.aggregate([
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: "%Y-%m-%d", date: "$orderDate" }
+                    },
+                    totalPrice: { $sum: { $toInt: "$totalPrice" } }
+                }
+            }, {
+                $sort: {
+                    _id: -1
+                }
+            },
+            {
+                $limit: 6
+            },
+            {
+                $sort: {
+                    _id: 1
+                }
+            }
+        ]);
+        res.json({ result: processedData });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred' });
+    }
+};
+const fetchpieChartData = async (req, res) => {
+    try {
+        const processedData = await Order.aggregate([
+            {
+                $group: {
+                    _id: "$paymentType",
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+        res.json({ result: processedData });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred' });
+    }
+};
 
 module.exports = {
     loginload,
@@ -598,5 +670,8 @@ module.exports = {
     editCategoryPageLoad,
     updateStatus,
     userorderList,
-    orderlistload
+    orderlistload,
+    fetchlineChartData,
+    fetchbarChartData,
+    fetchpieChartData
 }

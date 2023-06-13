@@ -29,6 +29,8 @@ userRoute.post('/login', userController.verifyLogin);
 
 userRoute.get('/login/catDetails/:id', userController.categoryDetail);
 userRoute.get('/sortfilter', userController.sortedProductList);
+
+
 userRoute.get('/login/prodDetails/:id', userController.prodDetails);
 userRoute.get('/products', userController.getAllProducts);
 

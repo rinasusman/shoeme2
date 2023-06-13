@@ -1,316 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Shoeme</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Colo Shop Template">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/template/styles/bootstrap4/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/template/styles/bootstrap4/bootstrap.min.css">
-    <link href="/template/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="/template/styles/categories_styles.css">
-    <link rel="stylesheet" type="text/css" href="/template/styles/categories_responsive.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <style>
-        .row {
-            display: flex;
-            justify-content: center;
-        }
+<title>Shoeme</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Colo Shop Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/template/styles/bootstrap4/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/template/styles/bootstrap4/bootstrap.min.css">
+<link href="/template/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/template/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="/template/styles/categories_responsive.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+crossorigin="anonymous"></script>
+<style>
+	.row {
+		display: flex;
+		justify-content: center;
+	}
 
-        .store-filter {
+	.store-filter {
+	
+		color: white;
+		padding: 10px;
+		display: flex;
+		align-items: center;
+	}
 
-            color: white;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-        }
+	.store-pagination {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+	}
 
-        .store-pagination {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-        }
+	.store-pagination li {
+		margin-right: 10px;
+	}
 
-        .store-pagination li {
-            margin-right: 10px;
-        }
+	.store-pagination li:last-child {
+		margin-right: 0;
+	}
 
-        .store-pagination li:last-child {
-            margin-right: 0;
-        }
+	.store-pagination li a {
+		display: inline-block;
+		padding: 5px 10px;
+		background-color: gray;
+		color: white;
+		text-decoration: none;
+		border-radius: 5px;
+	}
 
-        .store-pagination li a {
-            display: inline-block;
-            padding: 5px 10px;
-            background-color: gray;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .store-pagination li.active a {
-            background-color: black;
-        }
-    </style>
+	.store-pagination li.active a {
+		background-color: black;
+	}
+</style>
 </head>
 
 <body>
 
-    <div class="super_container">
+<div class="super_container">
 
-        <!-- Header -->
+	<!-- Header -->
 
-        <% if(typeof userData !="undefined" ){ %>
-            <%-include('userloged') %>
-                <%}else{%>
-                    <%- include('usernotloged') %>
-                        <%}%>
-
-
-                            <!-- Hamburger Menu -->
+	<% if(typeof userData !="undefined" ){ %>
+		<%-include('userloged') %>
+			<%}else{%>
+				<%- include('usernotloged') %>
+					<%}%>
 
 
-
-                            <div class="container product_section_container">
-                                <div class="row">
-                                    
-
-
-                                            <div class="products_iso">
-                                                <div class="row">
-                                                    <div class="col">
+	<!-- Hamburger Menu -->
 
 
 
-                                                        <div class="product_sorting_container product_sorting_container_top">
-
-                                                            <div class="product-grid">
-
-                                                                <!-- Product 1 -->
-
-                                                                <% allProducts.forEach(function(x,i) { %>
-                                                                    <div class="product-item men">
-                                                                        <div class="product discount product_filter">
-                                                                            <div class="product_image">
-                                                                                <img style="height: 230px;"
-                                                                                    src="/images/uploads/<%= x.imageUrl[0] %>"
-                                                                                    alt="">
-                                                                            </div>
-                                                                            
-                                                                            <div class="product_info">
-                                                                                <h6 class="product_name"><a href="">
-                                                                                        <%= x.productName %>
-                                                                                    </a></h6>
-                                                                                <div class="product_price">₹<%= x.price %>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="red_button add_to_cart_button"><a
-                                                                                href="#"
-                                                                                onclick="window.location.href='/login/prodDetails/<%= x._id %>'">View</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <% }); %>
-
-                                                            </div>
-
-
-
-
-                                                            
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    
-                                    
+	<div class="container product_section_container">
+        <div class="row">
+            <div class="col product_section clearfix">
+    
+                <!-- Breadcrumbs -->
+    
+    
+                <!-- Sidebar -->
+    
+                <div class="sidebar">
+                    <div class="sidebar_section">
+                       
+                    
+                    </div>
+    
+                    <!-- Price Range Filtering -->
+    
+                    <!-- Sizes -->
+                    <div class="sidebar_section">
+                       
+                       
+                    </div>
+    
+                    <!-- Color -->
+                    <div class="sidebar_section">
+                       
+                        
+                     
+                    </div>
+    
+                </div>
+    
+                <!-- Main Content -->
+    
+                <div class="main_content">
+    
+                    <!-- Products -->
+    
+                    <div class="products_iso">
+                        <div class="row">
+                            <div class="col">
+    
+                                <!-- Product Sorting -->
+    
+                                <div class="product_sorting_container product_sorting_container_top">
+    
+                                   
+    
                                 </div>
-
-                                <!-- Benefit -->
-
-                                <div class="benefit">
-                                    <div class="container">
-                                        <div class="row benefit_row">
-                                            <div class="col-lg-3 benefit_col">
-                                                <div class="benefit_item d-flex flex-row align-items-center">
-                                                    <div class="benefit_icon"><i class="fa fa-truck"
-                                                            aria-hidden="true"></i></div>
-                                                    <div class="benefit_content">
-                                                        <h6>free shipping</h6>
-                                                        <p>Suffered Alteration in Some Form</p>
-                                                    </div>
+    
+                                <!-- Product Grid -->
+    
+                                <div class="product-grid">
+    
+                                    <!-- Product Item -->
+                                    <% allProducts.forEach(function(x,i) { %>
+                                        <div class="product-item men">
+                                            <div class="product discount product_filter">
+                                                <div class="product_image">
+                                                    <img style="height: 230px;"
+                                                        src="/images/uploads/<%= x.imageUrl[0] %>"
+                                                        alt="">
+                                                </div>
+      
+                                                <div class="product_info">
+                                                    <h6 class="product_name"><a href="">
+                                                            <%= x.productName %>
+                                                        </a></h6>
+                                                    <div class="product_price">₹<%= x.price %>
+                                                    </div> <% if(x.offerPercentage!=0) { %><del
+                                                        class="product-old-price">
+                                                        <%= x.offerPrice %> ₹
+                                                      </del>
+                                                      <% }; %>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 benefit_col">
-                                                <div class="benefit_item d-flex flex-row align-items-center">
-                                                    <div class="benefit_icon"><i class="fa fa-money"
-                                                            aria-hidden="true"></i></div>
-                                                    <div class="benefit_content">
-                                                        <h6>cach on delivery</h6>
-                                                        <p>The Internet Tend To Repeat</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 benefit_col">
-                                                <div class="benefit_item d-flex flex-row align-items-center">
-                                                    <div class="benefit_icon"><i class="fa fa-undo"
-                                                            aria-hidden="true"></i></div>
-                                                    <div class="benefit_content">
-                                                        <h6>45 days return</h6>
-                                                        <p>Making it Look Like Readable</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 benefit_col">
-                                                <div class="benefit_item d-flex flex-row align-items-center">
-                                                    <div class="benefit_icon"><i class="fa fa-clock-o"
-                                                            aria-hidden="true"></i></div>
-                                                    <div class="benefit_content">
-                                                        <h6>opening all week</h6>
-                                                        <p>8AM - 09PM</p>
-                                                    </div>
-                                                </div>
+                                            <div class="red_button add_to_cart_button"><a
+                                                    href="#"
+                                                    onclick="window.location.href='/login/prodDetails/<%= x._id %>'">View</a>
                                             </div>
                                         </div>
-                                    </div>
+                                        <% }); %>
+    
                                 </div>
-
-                                <!-- Newsletter -->
-
-                                <div class="newsletter">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div
-                                                    class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-                                                    <h4>Newsletter</h4>
-                                                    <p>Subscribe to our newsletter and get 20% off your first purchase
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div
-                                                    class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
-                                                    <input id="newsletter_email" type="email" placeholder="Your email"
-                                                        required="required" data-error="Valid email is required.">
-                                                    <button id="newsletter_submit" type="submit"
-                                                        class="newsletter_submit_btn trans_300"
-                                                        value="Submit">subscribe</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Footer -->
-
-                                <footer class="footer">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div
-                                                    class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
-                                                    <ul class="footer_nav">
-                                                        <li><a href="#">Blog</a></li>
-                                                        <li><a href="#">FAQs</a></li>
-                                                        <li><a href="contact.html">Contact us</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div
-                                                    class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
-                                                    <ul>
-                                                        <li><a href="#"><i class="fa fa-facebook"
-                                                                    aria-hidden="true"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-twitter"
-                                                                    aria-hidden="true"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-instagram"
-                                                                    aria-hidden="true"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-skype"
-                                                                    aria-hidden="true"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-pinterest"
-                                                                    aria-hidden="true"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="footer_nav_container">
-                                                    <div class="cr">©2018 All Rights Reserverd. Template by <a
-                                                            href="#">Colorlib</a> &amp; distributed by <a
-                                                            href="https://themewagon.com">ThemeWagon</a></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </footer>
-
                             </div>
-                            <script>
-                                function filtering(id, page, limit) {
-                                    const checkboxes = document.querySelectorAll('.input-checkbox input[type="checkbox"]');
-                                    const selectElement = document.getElementById('optionSelect');
-                                    const selectedValue = selectElement.value;
+                        </div>
+                    </div>
+    
+                    <!-- Pagination -->
+    
+                    
+                </div>
+    
+            </div>
+        </div>
+    </div>
+	<!-- Benefit -->
 
+	<div class="benefit">
+		<div class="container">
+			<div class="row benefit_row">
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>free shipping</h6>
+							<p>Suffered Alteration in Some Form</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>cach on delivery</h6>
+							<p>The Internet Tend To Repeat</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>45 days return</h6>
+							<p>Making it Look Like Readable</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>opening all week</h6>
+							<p>8AM - 09PM</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<!-- Newsletter -->
 
-                                    const selectedCheckobj = {};
+	<div class="newsletter">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
+						<h4>Newsletter</h4>
+						<p>Subscribe to our newsletter and get 20% off your first purchase</p>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+						<input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
+						<button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                                    checkboxes.forEach((checkbox) => {
+	<!-- Footer -->
 
-                                        if (checkbox.checked) {
-                                            const checkboxId = checkbox.id
-                                            let parts = checkboxId.split("-")
-                                            let key = parts[0];
-                                            let value = parts[1];
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+						<ul class="footer_nav">
+							<li><a href="#">Blog</a></li>
+							<li><a href="#">FAQs</a></li>
+							<li><a href="contact.html">Contact us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="footer_nav_container">
+						<div class="cr">©2018 All Rights Reserverd. Template by <a href="#">Colorlib</a> &amp; distributed by <a href="https://themewagon.com">ThemeWagon</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
-                                            if (selectedCheckobj.hasOwnProperty(key)) {
-                                                selectedCheckobj[key].push(value)
-                                            } else {
-                                                selectedCheckobj[key] = [value]
-                                            }
+</div>
 
-                                            // selectedCheckobj[checkboxId]=1
-
-
-                                        }
-                                    });
-                                    let str = `/sortfilter?id=${id}&value=` + encodeURIComponent(selectedValue)
-                                    if (selectedCheckobj.brand) {
-                                        str += "&brand=" + selectedCheckobj.brand.join(",")
-                                    }
-                                    if (selectedCheckobj.size) {
-                                        str += "&size=" + selectedCheckobj.size.join(",")
-                                    }
-                                    if (selectedCheckobj.color) {
-                                        str += "&color=" + selectedCheckobj.color.join(",")
-                                    }
-                                    str += `&page=` + page + `&limit=` + limit
-                                    window.location.href = str;
-                                }
-                            </script>
-                            <script src="/template/js/jquery-3.2.1.min.js"></script>
-                            <script src="/template/styles/bootstrap4/popper.js"></script>
-                            <script src="/template/styles/bootstrap4/bootstrap.min.js"></script>
-                            <script src="/template/plugins/Isotope/isotope.pkgd.min.js"></script>
-                            <script src="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-                            <script src="/template/plugins/easing/easing.js"></script>
-                            <script src="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-                            <script src="/template/js/categories_custom.js"></script>
+<script src="/template/js/jquery-3.2.1.min.js"></script>
+<script src="/template/styles/bootstrap4/popper.js"></script>
+<script src="/template/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="/template/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="/template/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/template/plugins/easing/easing.js"></script>
+<script src="/template/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="/template/js/categories_custom.js"></script>
 </body>
 
 </html>

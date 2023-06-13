@@ -153,25 +153,25 @@
                       <h6 class="mb-4">CREATE COUPON</h6>
                     
                 <form action="/admin/couponCreate" method="post">
-                    <input class="w-50 mx-auto my-3 form-control" type="text" placeholder="Coupon Code" name="name"
+                    <input class=" mx-auto my-3 form-control" type="text" placeholder="Coupon Code" name="name"
                         id="name" oninput="validateName()">
                     <div style="display: flex; justify-content: center;">
                         <span id="nameError" style="color: red;"></span>
                     </div>
-                    <input class="w-50 mx-auto my-3 form-control" type="number" placeholder="Offer Percentage"
+                    <input class=" mx-auto my-3 form-control" type="number" placeholder="Offer Percentage"
                         id="percentage" name="percentage" oninput="validatePercentage()">
                     <div style="display: flex; justify-content: center;">
                         <span id="percentageError" style="color: red;"></span>
                     </div>
 
-                    <input class="w-50 mx-auto my-3 form-control" type="date" placeholder="Expiry Date" name="date"
+                    <input class=" mx-auto my-3 form-control" type="date" placeholder="Expiry Date" name="date"
                         id="date" onchange="validateExpiryDate()" >
                     <div style="display: flex; justify-content: center;">
                         <span id="expiryDateError" style="color: red;"></span>
                     </div>
 
 
-                    <button class="w-50 login mx-auto my-3 form-control" id="submitButton" type="submit"
+                    <button class="bg-primary text-white login mx-auto my-3 form-control" id="submitButton" type="submit"
                         disabled>ADD</button>
 
                 </form>

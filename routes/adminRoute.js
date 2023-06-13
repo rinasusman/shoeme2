@@ -18,6 +18,10 @@ adminRoute.get('/', adminController.loginload);
 adminRoute.post('/adminLogin', adminController.homeload);
 
 adminRoute.get('/dashboard', auth.adminLogin, adminController.dashboardload);
+adminRoute.post('/lineChart', adminController.fetchlineChartData);
+adminRoute.post('/barChart', adminController.fetchbarChartData);
+adminRoute.post('/pieChart', adminController.fetchpieChartData);
+
 
 // ================ user management ================//
 adminRoute.get('/userlist', auth.adminLogin, adminController.userlistload);

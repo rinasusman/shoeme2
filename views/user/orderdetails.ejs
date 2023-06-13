@@ -189,10 +189,10 @@
 
                               <div class="d-flex mb-2">
                                 <div class="flex-shrink-0">
-                                  <img src="/images/uploads/<%= j.imageUrl[0] %>" alt="" width="35" class="img-fluid zoomable">
+                                  <img src="/images/uploads/<%= j.imageUrl[0] %>" alt="" width="100" class="img-fluid zoomable">
                                 </div>
                                 <div class="flex-lg-grow-1 ms-3">
-                                  <h6 class="small mb-0"><a href="#" class="text-reset">
+                                  <h6 class="small mb-0"><a href="#" class="text-reset" style="font-weight: bold; font-size: larger;">
                                       <%= j.productName %>
                                     </a></h6>
                                   <span class="small">Color:  <%= j.color %></span>
@@ -203,7 +203,9 @@
                             </td>
                           
                             <td>
-                              <% i.item.forEach((j)=> { %> Qty: <%= j.quantity %>  <% }); %>
+                              <% i.item.forEach((j) => { %>
+                                <div class="tableHeight">QTY:<%= j.quantity %></div>
+                              <% }); %>
                             </td>
                       
                                 <td class="text-end">
@@ -213,7 +215,7 @@
                                 </td>
                           </tr>
                           <% }); %>
-
+                          <% i.item.forEach((j)=> { %> Qty: <%= i.quantity %>  <% }); %>
                       </tbody>
                       <tfoot>
                         <tr>
@@ -275,6 +277,7 @@
                                       <button class="btn btn-danger"
                                       onclick="returnOrder('<%= i._id %>')">Return</button>
                                       <% } %>
+                                      
                   </div>
                 </div>
                 <div class="card mb-4">

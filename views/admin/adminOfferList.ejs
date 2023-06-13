@@ -189,10 +189,10 @@
                                         </td>
                                         <td >
                                             <%if(x.product){ %>
-                                                <button class="buttons border-0 my-2"><a
+                                                <button class="buttons bg-danger  my-2"><a class="text-white"
                                                         href="/admin/productOfferDelete/<%= x._id %>">DELETE</a></button>
                                                 <% }else if(x.category){%>
-                                                    <button class="buttons my-2"><a
+                                                    <button class="buttons bg-danger text-white my-2"><a class="text-white"
                                                             href="/admin/categoryOfferDelete/<%= x._id %>">DELETE</a></button>
                                                     <%}%>
                                         </td>
