@@ -201,12 +201,13 @@
                                 </div>
                               </div>
                             </td>
-                          
+                            <% i.item.forEach((j) => { %>
                             <td>
-                              <% i.item.forEach((j) => { %>
+                            
                                 <div class="tableHeight">QTY:<%= j.quantity %></div>
-                              <% }); %>
+                            
                             </td>
+                            <% }); %>
                       
                                 <td class="text-end">
                                    ₹<%= j.price %>

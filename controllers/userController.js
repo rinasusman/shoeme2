@@ -1080,6 +1080,7 @@ const orderDatas = async (req, res) => {
           $sort: { _id: -1 }
         }
       ]);
+      console.log(orderDetails,"hhhhhhhhhhhhhhhhhhhhhhhhh");
       orderDetails.forEach((order) => {
         order.orderDate = order.orderDate.toISOString().split("T")[0];
         order.deliveryDate = order.deliveryDate.toISOString().split("T")[0];
