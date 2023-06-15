@@ -177,6 +177,10 @@
                                             <div><strong>FREE</strong></div>
                                         </div>
                                         <div class="order-col">
+                                            <div>Discount</div>
+                                            <div><strong>₹<%= userData.wallet %></strong></div>
+                                        </div>
+                                        <div class="order-col">
                                             <div><strong>TOTAL</strong></div>
                                             <div><strong class="order-total">
                                                     ₹ <%= totalPrice %>
@@ -388,26 +392,26 @@
         }
         function applyCoupon(couponId) {
             try {
-                selectedCouponId = couponId;
-                document.querySelector("#couponCancelbutton").style.display = "block";
-                fetch('/applyCoupon', {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ couponId: couponId }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        let totalPrice = parseFloat('<%= totalPrice %>');
-                        totalPrice = totalPrice - totalPrice * data * .01
-                        totalPriceLabel.innerText = 'Pay ' + totalPrice.toFixed(2);
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            } catch (error) {
+        selectedCouponId = couponId;
+        document.querySelector("#couponCancelbutton").style.display = "block";
+        fetch('/applyCoupon', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ couponId: couponId }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                let totalPrice = parseFloat('<%= totalPrice %>');
+                totalPrice = totalPrice * (1 - data * 0.01);
+                totalPriceLabel.innerText = 'Pay ' + totalPrice.toFixed(2);
+            })
+            .catch((error) => {
                 console.error(error);
-            }
-        }
+            });
+    } catch (error) {
+        console.error(error);
+    }
+}
         function submitOrder(event, userId, totalPrice) {
 
             const walletCheckbox = document.getElementById('wallet-0');
@@ -434,62 +438,56 @@
                 }
             }
             if (selectedPayment) {
-                const selectedAddressRadio = document.querySelector('input[name="selectedAddress"]:checked');
-                if (selectedAddressRadio) {
+        const selectedAddressRadio = document.querySelector('input[name="selectedAddress"]:checked');
+        if (selectedAddressRadio) {
                     const addressId = selectedAddressRadio.value;
                     const paymentMethod = selectedPayment.replace('payment-', '');
 
                     fetch("/createRP", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            userId: userId,
-                            wallet: walletCheckbox.checked,
-                            paymentMethod: paymentMethod
-                        })
-                    })
-                        .then(response => response.json())
-
-                        .then(data => {
-                            rpOrderID = data.rpOrderId
-                            if (rpOrderID == null) {
-                                alert("Some Items are out of stock!")
-
-                            } else if (selectedPayment == "payment-1" || selectedPayment == "payment-2") {
-                                const url = `http://localhost:3000/placeOrder?addressId=${addressId}&payment=${paymentMethod}&wallet=${walletFlag}`
-                                let options = {
-                                    "key": "rzp_test_Z6ogCp3lsMS6mX",
-                                    "amount": totalPrice * 100,
-                                    "currency": "INR",
-                                    "name": "ShoeME",
-                                    "description": "Test Transaction",
-                                    "image": "https://example.com/your_logo",
-                                    "order_id": data.rpOrderID,
-                                    "callback_url": url
-                                }
-                                let rzp1 = new Razorpay(options);
-                                rzp1.open();
-                            } else if (selectedPayment == "payment-0") {
-                                const addressId = selectedAddressRadio.value;
-                                const paymentMethod = selectedPayment.replace('payment-', '');
-                                const url = `/placeOrder?addressId=${addressId}&payment=${paymentMethod}&wallet=${walletFlag}`;
-                                window.location.href = url;
-
-                            }
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
-                } else {
-                    alert('No address selected');
-                }
-            } else {
-                alert('No Payment Method Selected');
-            }
-
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    wallet: walletCheckbox.checked,
+                    paymentMethod: paymentMethod
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    rpOrderID = data.rpOrderId;
+                    if (rpOrderID == null) {
+                        alert("Some Items are out of stock!");
+                    } else if (selectedPayment == "payment-1" || selectedPayment == "payment-2") {
+                        const url = `http://localhost:3000/placeOrder?addressId=${addressId}&payment=${paymentMethod}&wallet=${walletFlag}`;
+                        let options = {
+                            "key": "rzp_test_Z6ogCp3lsMS6mX",
+                            "amount": Math.round(totalPrice * 100), // Updated to round off the value
+                            "currency": "INR",
+                            "name": "ShoeME",
+                            "description": "Test Transaction",
+                            "image": "https://example.com/your_logo",
+                            "order_id": data.rpOrderID,
+                            "callback_url": url
+                        };
+                        let rzp1 = new Razorpay(options);
+                        rzp1.open();
+                    } else if (selectedPayment == "payment-0") {
+                        const url = `/placeOrder?addressId=${addressId}&payment=${paymentMethod}&wallet=${walletFlag}`;
+                        window.location.href = url;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        } else {
+            alert('No address selected');
         }
+    } else {
+        alert('No Payment Method Selected');
+    }
+}
 
         const placeOrderLink = document.querySelector('.order-submit');
         const paymentRadios = document.querySelectorAll('input[name="payment"]');
