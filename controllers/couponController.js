@@ -1,5 +1,6 @@
 const Coupon = require('../models/couponModel');
 
+
 const couponlistload = async (req, res) => {
   try {
     const coupondata = await Coupon.find();
@@ -11,7 +12,8 @@ const couponlistload = async (req, res) => {
 
 const couponCreate = async (req, res) => {
   try {
-    res.render("adminCouponCreate");
+
+    res.render("adminCouponCreate",{ footer: "" });
   } catch (error) {
     console.log(error.message);
   }
@@ -19,6 +21,7 @@ const couponCreate = async (req, res) => {
 
 
 const addCoupon = async (req, res) => {
+
   try {
     const coupnCode = req.body.name;
     const couponDiscount = req.body.percentage;
@@ -30,14 +33,15 @@ const addCoupon = async (req, res) => {
     const couponExist = await Coupon.findOne({ code: lowerCouponCode });
     if (!couponExist) {
       const newCoupon = new Coupon({
-        code: coupnCode,
+        code: coupnCode.toLowerCase(),
         percentage: couponDiscount,
         expiryDate: expiryDate,
       });
       await newCoupon.save();
       res.redirect("/admin/couponlist");
     } else {
-      res.redirect("/admin/couponCreate");
+      res.render("adminCouponCreate", { footer: "Coupon already exists" });
+      // res.redirect("/admin/couponCreate");
     }
   } catch (error) {
     console.error(error);

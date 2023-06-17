@@ -136,33 +136,30 @@ crossorigin="anonymous"></script>
                                 <div class="product-grid">
     
                                     <!-- Product Item -->
-                                    <% allProducts.forEach(function(x,i) { %>
-                                        <div class="product-item men">
-                                            <div class="product discount product_filter">
-                                                <div class="product_image">
-                                                    <img style="height: 230px;"
-                                                        src="/images/uploads/<%= x.imageUrl[0] %>"
-                                                        alt="">
-                                                </div>
-      
-                                                <div class="product_info">
-                                                    <h6 class="product_name"><a href="">
-                                                            <%= x.productName %>
-                                                        </a></h6>
-                                                    <div class="product_price">₹<%= x.price %>
-                                                    </div> <% if(x.offerPercentage!=0) { %><del
-                                                        class="product-old-price">
-                                                        <%= x.offerPrice %> ₹
-                                                      </del>
-                                                      <% }; %>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button"><a
-                                                    href="#"
-                                                    onclick="window.location.href='/login/prodDetails/<%= x._id %>'">View</a>
-                                            </div>
-                                        </div>
-                                        <% }); %>
+									<% allProducts.forEach(function(x,i) { %>
+										<div class="product-item men">
+										  <div class="product discount product_filter">
+											<div class="product_image">
+											  <img src="/images/uploads/<%= x.imageUrl[0] %>" alt="">
+											</div>
+											<div class="favorite favorite_left"></div>
+											<% if(x.offerPercentage!=0) { %>
+											<div class=" product_bubble  product_bubble_red product_bubble_right d-flex flex-column align-items-center">  
+											  <span class=""><%= x.offerPercentage %> %
+											  </span>
+											  </div><% }; %>
+											<div class="product_info">
+											  <h6 class="product_name"><a href="#"><%= x.productName %>/a></h6>
+											  <div class="product_price">₹<%= x.price %> <span> <% if(x.offerPercentage!=0) { %><del
+												class="product-old-price">
+												₹<%= x.offerPrice %> 
+											  </del>
+											  <% }; %></span></div>
+											</div>
+										  </div>
+										  <div class="red_button add_to_cart_button"><a onclick="window.location.href='/login/prodDetails/<%= x._id %>'">View</a></div>
+										</div>
+										<% }); %>
     
                                 </div>
                             </div>

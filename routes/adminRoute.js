@@ -17,10 +17,17 @@ adminRoute.set('views', './views/admin');
 adminRoute.get('/', adminController.loginload);
 adminRoute.post('/adminLogin', adminController.homeload);
 
-adminRoute.get('/dashboard', auth.adminLogin, adminController.dashboardload);
+
 adminRoute.post('/lineChart', adminController.fetchlineChartData);
 adminRoute.post('/barChart', adminController.fetchbarChartData);
 adminRoute.post('/pieChart', adminController.fetchpieChartData);
+
+
+adminRoute.get('/exportPdfDailySales', adminController.exportPdfDailySales);
+adminRoute.get('/exportPdfWeeklySales', adminController.exportPdfWeeklySales);
+adminRoute.get('/exportPdfYearlySales', adminController.exportPdfYearlySales);
+
+adminRoute.get('/dashboard', auth.adminLogin, adminController.dashboardload);
 
 
 // ================ user management ================//

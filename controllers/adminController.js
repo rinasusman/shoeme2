@@ -3,10 +3,13 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Order = require("../models/orderModel");
 const { ObjectId } = require("mongodb");
-
-
+const ejs = require("ejs");
 const fs = require("fs");
 const path = require("path");
+const puppeteer = require('puppeteer');
+
+
+
 
 const loginload = async (req, res) => {
     try {
@@ -646,14 +649,195 @@ const fetchpieChartData = async (req, res) => {
         res.status(500).json({ error: 'An error occurred' });
     }
 };
+const exportPdfDailySales = async (req, res) => {
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const todaysOrders = await Order.aggregate([
+            {
+                $match: {
+                    orderDate: {
+                        $gte: new Date(today),
+                        $lt: new Date(today + 'T23:59:59.999Z')
+                    }
+                }
+            }, {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            }, {
+                $unwind: '$user'
+            }, {
+                $lookup: {
+                    from: "products",
+                    localField: "item.product",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+        ]);
+        const orderData = {
+            todaysOrders: todaysOrders
+        }
+        const filePathName = path.resolve(__dirname, "../views/admin/htmlToPdf.ejs")
+        const htmlString = fs.readFileSync(filePathName).toString();
+        const ejsData = ejs.render(htmlString, orderData)
+        await createDailySalesPdf(ejsData);
+        const pdfFilePath = 'DailySalesReport.pdf';
+        const pdfData = fs.readFileSync(pdfFilePath);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="DailySalesReport.pdf"');
+        res.send(pdfData);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+const createDailySalesPdf = async (html) => {
+    const browser = await puppeteer.launch({
+        headless: "new",
+        args: ['--no-sandbox','--disable-setuid-sandbox']
+      });
+    const page = await browser.newPage();
+    await page.setContent(html);
+    await page.pdf({ path: 'DailySalesReport.pdf' });
+    await browser.close();
+};
+const exportPdfWeeklySales = async (req, res) => {
+    try {
+        const today = new Date();
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay());
+        startOfWeek.setHours(0, 0, 0, 0);
+        const endOfWeek = new Date(today);
+        endOfWeek.setDate(today.getDate() - today.getDay() + 6);
+        endOfWeek.setHours(23, 59, 59, 999);
+        const todaysOrders = await Order.aggregate([
+            {
+                $match: {
+                    orderDate: {
+                        $gte: startOfWeek,
+                        $lt: endOfWeek
+                    }
+                }
+            }, {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            }, {
+                $unwind: '$user'
+            }, {
+                $lookup: {
+                    from: "products",
+                    localField: "item.product",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+        ]);
+        const orderData = {
+            todaysOrders: todaysOrders
+        }
+        const filePathName = path.resolve(__dirname, "../views/admin/htmlToPdf.ejs")
+        const htmlString = fs.readFileSync(filePathName).toString();
+        const ejsData = ejs.render(htmlString, orderData)
+        await createWeeklySalesPdf(ejsData);
+        const pdfFilePath = 'WeeklySalesReport.pdf';
+        const pdfData = fs.readFileSync(pdfFilePath);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="WeeklySalesReport.pdf"');
+        res.send(pdfData);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+const createWeeklySalesPdf = async (html) => {
+    const browser = await puppeteer.launch({
+        headless: "new",
+        args: ['--no-sandbox','--disable-setuid-sandbox']
+      });
+    const page = await browser.newPage();
+    await page.setContent(html);
+    await page.pdf({ path: 'WeeklySalesReport.pdf' });
+    await browser.close();
+};
+
+const exportPdfYearlySales = async (req, res) => {
+    try {
+        const today = new Date();
+        const year = today.getFullYear();
+        const startOfYear = new Date(year, 0, 1);
+        startOfYear.setHours(0, 0, 0, 0);
+        const endOfYear = new Date(year, 11, 31);
+        endOfYear.setHours(23, 59, 59, 999);
+        const todaysOrders = await Order.aggregate([
+            {
+                $match: {
+                    orderDate: {
+                        $gte: startOfYear,
+                        $lt: endOfYear
+                    }
+                }
+            }, {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            }, {
+                $unwind: '$user'
+            }, {
+                $lookup: {
+                    from: "products",
+                    localField: "item.product",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+        ]);
+        const orderData = {
+            todaysOrders: todaysOrders
+        }
+        const filePathName = path.resolve(__dirname, "../views/admin/htmlToPdf.ejs")
+        const htmlString = fs.readFileSync(filePathName).toString();
+        const ejsData = ejs.render(htmlString, orderData)
+        await createYearlySalesPdf(ejsData);
+        const pdfFilePath = 'YearlySalesReport.pdf';
+        const pdfData = fs.readFileSync(pdfFilePath);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="YearlySalesReport.pdf"');
+        res.send(pdfData);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+const createYearlySalesPdf = async (html) => {
+    const browser = await puppeteer.launch({
+        headless: "new",
+        args: ['--no-sandbox','--disable-setuid-sandbox']
+      });
+    const page = await browser.newPage();
+    await page.setContent(html);
+    await page.pdf({ path: 'YearlySalesReport.pdf' });
+    await browser.close();
+};
 
 module.exports = {
     loginload,
     homeload,
     handleLogout,
     dashboardload,
+    exportPdfYearlySales,
     userlistload,
     userBlockUnblock,
+    exportPdfWeeklySales,
     catlistload,
     createCategory,
     addNewCategory,
@@ -673,5 +857,6 @@ module.exports = {
     orderlistload,
     fetchlineChartData,
     fetchbarChartData,
-    fetchpieChartData
+    fetchpieChartData,
+    exportPdfDailySales 
 }

@@ -178,11 +178,11 @@
                                         </div>
                                         <div class="order-col">
                                             <div>Discount</div>
-                                            <div><strong>₹<%= userData.wallet %></strong></div>
+                                            <div><strong name="discount" id="discount">0</strong></div>
                                         </div>
                                         <div class="order-col">
                                             <div><strong>TOTAL</strong></div>
-                                            <div><strong class="order-total">
+                                            <div><strong class="order-total" id="totalAmount">
                                                     ₹ <%= totalPrice %>
                                                 </strong></div>
                                         </div>
@@ -402,8 +402,13 @@
             .then((response) => response.json())
             .then((data) => {
                 let totalPrice = parseFloat('<%= totalPrice %>');
-                totalPrice = totalPrice * (1 - data * 0.01);
-                totalPriceLabel.innerText = 'Pay ' + totalPrice.toFixed(2);
+
+                totalPrices = Math.round(totalPrice * (1 - data * 0.01));
+                let discountAmount=parseFloat(totalPrice-totalPrices);
+                document.getElementById('discount').innerHTML=discountAmount
+                document.getElementById('totalAmount').innerHTML=totalPrices
+              
+                totalPriceLabel.innerText = 'Pay ' + totalPrices.toFixed(2);;
             })
             .catch((error) => {
                 console.error(error);
@@ -412,7 +417,7 @@
         console.error(error);
     }
 }
-        function submitOrder(event, userId, totalPrice) {
+        function submitOrder(event, userId, totalPrice,discountAmount) {
 
             const walletCheckbox = document.getElementById('wallet-0');
             const walletAmount = parseFloat('<%= userData.wallet %>');
@@ -428,6 +433,7 @@
                 }
 
             }
+
 
             let selectedPayment = '';
             const paymentRadios = document.getElementsByName('payment');
@@ -451,7 +457,7 @@
                 body: JSON.stringify({
                     userId: userId,
                     wallet: walletCheckbox.checked,
-                    paymentMethod: paymentMethod
+                    paymentMethod: paymentMethod,
                 })
             })
                 .then(response => response.json())

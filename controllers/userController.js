@@ -753,8 +753,9 @@ const loadCheckOut = async (req, res) => {
   const today = new Date();
   const coupon = await Coupon.find({
     expiryDate: { $gte: today },
-    usedBy: { $nin: [userId] }
+    usedBy: { $nin: [userId] }, percentage: { $exists: true }
   });
+  console.log(coupon,"coupon is arrive");
   const cartData = await Cart.aggregate([
     {
       $match: {
@@ -1080,7 +1081,7 @@ const orderDatas = async (req, res) => {
           $sort: { _id: -1 }
         }
       ]);
-      console.log(orderDetails,"hhhhhhhhhhhhhhhhhhhhhhhhh");
+     
       orderDetails.forEach((order) => {
         order.orderDate = order.orderDate.toISOString().split("T")[0];
         order.deliveryDate = order.deliveryDate.toISOString().split("T")[0];
@@ -1371,7 +1372,9 @@ const cancelSelection = async (req, res) => {
 const createRP = async (req, res) => {
   const userId = req.body.userId.replace(/\s/g, "")
   const wallet = req.body.wallet
+ 
   const paymentMethod = req.body.paymentMethod
+
   const cartData = await Cart.aggregate([
     {
       $match: {
@@ -1421,7 +1424,9 @@ const createRP = async (req, res) => {
       let amount
       if (wallet) {
         amount = cartData[0].totalPrice - userData.wallet
-      } else {
+      }
+     
+      else {
         amount = cartData[0].totalPrice
       }
       // let amount = 100
