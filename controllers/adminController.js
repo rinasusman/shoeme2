@@ -22,8 +22,8 @@ const loginload = async (req, res) => {
 const homeload = async (req, res) => {
     try {
         const credential = {
-            email: "admin@gmail.com",
-            password: "admin",
+            email: process.env.ADMIN_EMAIL,
+            password: process.env.ADMIN_PASS,
         };
         if (req.body.email == credential.email && req.body.password == credential.password) {
             req.session.admin = req.body.email;

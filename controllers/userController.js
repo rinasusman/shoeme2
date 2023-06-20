@@ -9,7 +9,9 @@ const Banner = require('../models/bannerModel');
 const Wishlist = require("../models/wishlistModel");
 const Coupon = require("../models/couponModel");
 const { ObjectId } = require("mongodb");
+require('dotenv').config();
 const Razorpay = require("razorpay");
+
 
 const homeload = async (req, res) => {
   try {
@@ -1332,22 +1334,174 @@ const addToCartFromWishlist = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-  try {
-    const allProducts = await Product.find({ isDeleted: false })
-    let userData = null;
-    if (req.session.user) {
-      const userId = req.session.user;
-      userData = await User.findOne({ _id: userId });
-      res.render("Allproducts", { userData, allProducts });
-    } else {
-      res.render("Allproducts", { allProducts });
+  const limitVal=8
+  
+    try {
+
+      const entireProductData = await Product.aggregate([
+        {
+          $lookup: {
+            from: "categories",
+            localField: "category",
+            foreignField: "_id",
+            as: "category",
+          },
+        },
+        {
+          $unwind: "$category",
+        }
+      ])
+      const colorOption = [...new Set(entireProductData.map(obj => obj.color))];
+      const brandOption = [...new Set(entireProductData.map(obj => obj.brand))];
+      const sizeOption = [...new Set(entireProductData.map(obj => obj.size))];
+      let y=[
+        {
+          $lookup: {
+            from: "categories",
+            localField: "category",
+            foreignField: "_id",
+            as: "category",
+          },
+        },
+        {
+          $unwind: "$category",
+        },
+      ]
+      const AllPageProductData = await Product.aggregate(y)
+      const productData=await Product.aggregate(y).skip(0).limit(limitVal);
+      const totalPages=Math.ceil(AllPageProductData.length/limitVal)
+      if (req.session.user) {
+        userData = req.session.user;
+        User.findOne({ _id: userData }).then((user) => {
+          res.render("Allproducts", {
+            userData: user,
+            data: productData,
+            brandOption: brandOption,
+            sizeOption: sizeOption,
+            colorOption: colorOption,
+            colorSelected: [],
+            brandSelected: [],
+            sizeSelected: [],
+            
+            page: 1,
+            sort: 0,
+            totalPages:totalPages,
+            limitVal:limitVal
+          });
+        });
+      } else {
+        res.render("Allproducts", { data: productData, sort: 0, colorSelected: [], brandSelected: [], sizeSelected: [], brandOption: brandOption, sizeOption: sizeOption, colorOption: colorOption, page: 1, sort: 0,totalPages:totalPages,limitVal:limitVal });
+      }
+    } catch (error) {
+      console.log(error.message);
     }
+ 
+  // try {
+  //   const allProducts = await Product.find({ isDeleted: false })
+  //   let userData = null;
+  //   if (req.session.user) {
+  //     const userId = req.session.user;
+  //     userData = await User.findOne({ _id: userId });
+  //     res.render("Allproducts", { userData, allProducts });
+  //   } else {
+  //     res.render("Allproducts", { allProducts });
+  //   }
+  // } catch (error) {
+  //   console.log(error.message);
+
+  // }
+
+
+};
+const sortedProductLists = async (req, res) => {
+  try {
+
+    const entireProductData = await Product.aggregate([
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      {
+        $unwind: "$category",
+      }
+    ]);
+    const colorOption = [...new Set(entireProductData.map(obj => obj.color))];
+    const brandOption = [...new Set(entireProductData.map(obj => obj.brand))];
+    const sizeOption = [...new Set(entireProductData.map(obj => obj.size))];
+
+
+    const sortValue = parseInt(req.query.value, 10)
+    const color = req.query.color ? req.query.color.split(",") : []
+    const brand = req.query.brand ? req.query.brand.split(",") : []
+    const size = req.query.size ? req.query.size.split(",") : []
+    const page = parseInt(req.query.page, 10) - 1
+    const limitVal = parseInt(req.query.limit, 10)
+    
+    let query = {
+      isDeleted: false,
+      isCategoryDeleted:false,
+   
+      stock: { $ne: 0 }
+    }
+    if (brand.length > 0) {
+      query.brand = { $in: brand }
+    }
+    if (size.length > 0) {
+      query.size = { $in: size }
+    }
+    if (color.length > 0) {
+      query.color = { $in: color }
+    }
+
+
+    let z = {
+      $sort: {
+        price: sortValue,
+      },
+    }
+
+    let y = [
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      {
+        $unwind: "$category",
+      }, {
+        $match: query,
+      },
+    ]
+
+    if (sortValue != 0) {
+      y.push(z)
+    }
+    const sortedProductData = await Product.aggregate(y).skip(page*limitVal).limit(limitVal)
+    const categoryProducts=await Product.aggregate(y)
+    const totalPages=Math.ceil(categoryProducts.length/limitVal)
+    if (req.session.user) {
+      userData = req.session.user;
+      User.findOne({ _id: userData }).then((user) => {
+        res.render("Allproducts", {
+          userData: user,
+          data: sortedProductData,
+          sort: sortValue, colorSelected: color, brandSelected: brand, sizeSelected: size, brandOption: brandOption, sizeOption: sizeOption, colorOption: colorOption, page: page + 1,totalPages:totalPages,limitVal:limitVal,
+        });
+      });
+    } else {
+      res.render("Allproducts", { data: sortedProductData, sort: sortValue, colorSelected: color, brandSelected: brand, sizeSelected: size, brandOption: brandOption, sizeOption: sizeOption, colorOption: colorOption, page: page + 1,totalPages:totalPages,limitVal:limitVal });
+    }
+
   } catch (error) {
     console.log(error.message);
-
   }
-
-
 };
 const applyCoupon = async (req, res) => {
   const userId = req.session.user;
@@ -1420,7 +1574,7 @@ const createRP = async (req, res) => {
     if (paymentMethod == 0) {
       res.json({ rpOrderId: 0 });
     } else {
-      let instance = new Razorpay({ key_id: 'rzp_test_Z6ogCp3lsMS6mX', key_secret: "GfeGBYD3Jojxqd7vdqZoRzzP" })
+      let instance = new Razorpay({ key_id: process.env.KEY_ID, key_secret: process.env.KEY_SECRET })
       let amount
       if (wallet) {
         amount = cartData[0].totalPrice - userData.wallet
@@ -1486,6 +1640,7 @@ module.exports = {
   checkOrder,
   orderDatas,
   returnOrder,
+  sortedProductLists
  
  
 }

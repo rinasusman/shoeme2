@@ -90,28 +90,74 @@ crossorigin="anonymous"></script>
     
                 <!-- Sidebar -->
     
-                <div class="sidebar">
-                    <div class="sidebar_section">
-                       
-                    
-                    </div>
-    
-                    <!-- Price Range Filtering -->
-    
-                    <!-- Sizes -->
-                    <div class="sidebar_section">
-                       
-                       
-                    </div>
-    
-                    <!-- Color -->
-                    <div class="sidebar_section">
-                       
-                        
-                     
-                    </div>
-    
-                </div>
+               
+				<div class="sidebar">
+					
+
+					<!-- Brand -->
+					<div class="sidebar_section">
+						<div class="sidebar_title">
+							<h5>Brand</h5>
+						</div>
+						
+						<ul class="checkboxes">
+							<% brandOption.forEach((j)=> { %>
+								<div class="input-checkbox">
+								  <input type="checkbox" id="brand-<%= j %>" <% if
+									(brandSelected.includes(j)) { %>checked<% } %>>
+									<label for="brand-<%= j %>">
+									  <span></span>
+									  <%= j %>
+									</label>
+								</div>
+								<% }); %>
+						</ul>
+						
+					</div>
+
+					<!-- Sizes -->
+					<div class="sidebar_section">
+						<div class="sidebar_title">
+							<h5>Sizes</h5>
+						</div>
+						<ul class="checkboxes">
+							<% sizeOption.forEach((j)=> { %>
+								<div class="input-checkbox">
+								  <input type="checkbox" id="size-<%= j %>" <% if
+									(sizeSelected.includes(j)) { %>checked<% } %>>
+									<label for="size-<%= j %>">
+									  <span></span>
+									  <%= j %>
+									</label>
+								</div>
+								<% }); %>
+						</ul>
+					</div>
+
+					<!-- Color -->
+					<div class="sidebar_section">
+						<div class="sidebar_title">
+							<h5>Color</h5>
+						</div>
+						<ul class="checkboxes">
+							<% colorOption.forEach((j)=> { %>
+								<div class="input-checkbox">
+								  <input type="checkbox" id="color-<%= j %>" <% if
+									(colorSelected.includes(j)) { %>checked<% } %>>
+									<label for="color-<%= j %>">
+									  <span></span>
+									  <%= j %>
+									</label>
+								</div>
+								<% }); %>
+						</ul>
+						<div class="show_more">
+							<button type="submit" class="bg-dark text-white p-2" style="border: none; border-radius: 5px;"
+							onclick="filtering( 1, 2)">Apply</button>
+						</div>
+					</div>
+
+				</div>
     
                 <!-- Main Content -->
     
@@ -124,19 +170,38 @@ crossorigin="anonymous"></script>
                             <div class="col">
     
                                 <!-- Product Sorting -->
-    
-                                <div class="product_sorting_container product_sorting_container_top">
-    
-                                   
-    
-                                </div>
+								<div class="product_sorting_container product_sorting_container_top">
+									<ul class="product_sorting">
+										<label style="color: black;">
+											Sort By Price:
+											<select class="input-select" id="optionSelect" placeholder="select"
+											  onchange="filtering(1,2)">
+											  <option value="0" <%=sort===0 ? "selected" : "" %>></option>
+											  <option value="1" <%=sort===1 ? "selected" : "" %>>Low to high
+											  </option>
+											  <option value="-1" <%=sort===-1 ? "selected" : "" %>>High to low
+											  </option>
+											</select>
+										  </label>
+										
+											<input type="text" value="Search">
+											
+											
+											
+											
+										
+									</ul>
+								
+
+								</div>
+            
     
                                 <!-- Product Grid -->
     
                                 <div class="product-grid">
     
                                     <!-- Product Item -->
-									<% allProducts.forEach(function(x,i) { %>
+									<% data.forEach(function(x,i) { %>
 										<div class="product-item men">
 										  <div class="product discount product_filter">
 											<div class="product_image">
@@ -162,6 +227,18 @@ crossorigin="anonymous"></script>
 										<% }); %>
     
                                 </div>
+								<div class="row">
+									<div class="store-filter text-center">
+									  <ul class="store-pagination d-flex justify-content-center">
+										<% for (let i=1; i <=totalPages; i++) { %>
+										  <li <% if (i===page) { %>class="active"<% } %>><a href="#"
+												onclick="filtering('<%= i %>','<%= limitVal %>')">
+												<%= i %>
+											  </a></li>
+										  <% } %>
+									  </ul>
+									</div>
+								  </div>
                             </div>
                         </div>
                     </div>
@@ -277,7 +354,46 @@ crossorigin="anonymous"></script>
 	</footer>
 
 </div>
+<script>
+	function filtering( page, limit) {	
+		const checkboxes = document.querySelectorAll('.input-checkbox input[type="checkbox"]');
+		const selectElement = document.getElementById('optionSelect');
+		const selectedValue = selectElement.value;
 
+
+
+		const selectedCheckobj = {};
+
+		checkboxes.forEach((checkbox) => {
+
+			if (checkbox.checked) {
+				const checkboxId = checkbox.id
+				let parts = checkboxId.split("-")
+				let key = parts[0];
+				let value = parts[1];
+
+				if (selectedCheckobj.hasOwnProperty(key)) {
+					selectedCheckobj[key].push(value)
+				} else {
+					selectedCheckobj[key] = [value]
+				}
+
+			}
+		});
+		let str = `/sortfilters?value=` + encodeURIComponent(selectedValue)
+		if (selectedCheckobj.brand) {
+			str += "&brand=" + selectedCheckobj.brand.join(",")
+		}
+		if (selectedCheckobj.size) {
+			str += "&size=" + selectedCheckobj.size.join(",")
+		}
+		if (selectedCheckobj.color) {
+			str += "&color=" + selectedCheckobj.color.join(",")
+		}
+		str += `&page=`+page+`&limit=`+limit
+		window.location.href = str;
+	}
+</script>
 <script src="/template/js/jquery-3.2.1.min.js"></script>
 <script src="/template/styles/bootstrap4/popper.js"></script>
 <script src="/template/styles/bootstrap4/bootstrap.min.js"></script>

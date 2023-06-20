@@ -181,9 +181,9 @@
                                             <div><strong name="discount" id="discount">0</strong></div>
                                         </div>
                                         <div class="order-col">
-                                            <div><strong>TOTAL</strong></div>
+                                            <div><strong>TOTAL ₹</strong></div>
                                             <div><strong class="order-total" id="totalAmount">
-                                                    ₹ <%= totalPrice %>
+                                                     <%= totalPrice %>
                                                 </strong></div>
                                         </div>
                             </div>
@@ -381,6 +381,9 @@
                     .then((response) => response.json())
                     .then((data) => {
                         let totalPrice = parseFloat('<%= totalPrice %>');
+             
+                        document.getElementById('discount').innerHTML=0
+                        document.getElementById('totalAmount').innerHTML=totalPrice
                         totalPriceLabel.innerText = 'Pay ' + totalPrice.toFixed(2);
                     })
                     .catch((error) => {
@@ -402,13 +405,13 @@
             .then((response) => response.json())
             .then((data) => {
                 let totalPrice = parseFloat('<%= totalPrice %>');
-
-                totalPrices = Math.round(totalPrice * (1 - data * 0.01));
-                let discountAmount=parseFloat(totalPrice-totalPrices);
+                let discountAmount=parseFloat(totalPrice-(totalPrice * (1 - data * 0.01))).toFixed(2);
+                totalPrice = Math.round(totalPrice * (1 - data * 0.01));
+                // let discountAmount=parseFloat(totalPrice-totalPrices);
                 document.getElementById('discount').innerHTML=discountAmount
-                document.getElementById('totalAmount').innerHTML=totalPrices
+                document.getElementById('totalAmount').innerHTML=totalPrice
               
-                totalPriceLabel.innerText = 'Pay ' + totalPrices.toFixed(2);;
+                totalPriceLabel.innerText = 'Pay ' + totalPrice.toFixed(2);;
             })
             .catch((error) => {
                 console.error(error);
@@ -466,10 +469,13 @@
                     if (rpOrderID == null) {
                         alert("Some Items are out of stock!");
                     } else if (selectedPayment == "payment-1" || selectedPayment == "payment-2") {
+                        let x=document.getElementById('totalAmount').innerText;
+                        localStorage.setItem('Totalvalue', x);
+
                         const url = `http://localhost:3000/placeOrder?addressId=${addressId}&payment=${paymentMethod}&wallet=${walletFlag}`;
                         let options = {
                             "key": "rzp_test_Z6ogCp3lsMS6mX",
-                            "amount": Math.round(totalPrice * 100), // Updated to round off the value
+                            "amount": Math.round(x * 100), // Updated to round off the value
                             "currency": "INR",
                             "name": "ShoeME",
                             "description": "Test Transaction",

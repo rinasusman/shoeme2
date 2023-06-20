@@ -173,7 +173,11 @@
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2" style="font-size: smaller;">Weekly Earnings</p>
-                                <h6 class="mb-0">₹ <%= weeklyEarnings[0].totalPriceSum %></h6>
+                                <% if (weeklyEarnings && weeklyEarnings.length > 0 && weeklyEarnings[0] && weeklyEarnings[0].totalPriceSum) { %>
+                                    <h6 class="mb-0">₹ <%= weeklyEarnings[0].totalPriceSum %></h6>
+                                <% } else { %>
+                                    <h6 class="mb-0">₹ 0</h6>
+                                <% } %>
                             </div>
                         </div>
                     </div>
@@ -357,21 +361,24 @@
                 </script>
                 <br><br>
                
-                <div class="col-lg-4 col-md-12 download ">
-                    <div class="downloadPdf">
+                <div class="col-lg-4 col-md-12  ">
+                    <div class="downloadPdf bg-light d-flex align-items-center">
                         <p>Daily Sales Report</p>
                         <a href="/admin/exportPdfDailySales"><i class="fa-solid fa-download"></i></a>
                     </div>
-                    <div class="downloadPdf">
+                    <br>
+                    <div class="downloadPdf bg-light d-flex align-items-center">
                         <p>Weekly Sales Report</p>
                         <a href="/admin/exportPdfWeeklySales"><i class="fa-solid fa-download"></i></a>
                     </div>
-                    <div class="downloadPdf">
+                    <br>
+                    <div class="downloadPdf bg-light d-flex align-items-center">
                         <p>Yearly Sales Report</p>
                         <a href="/admin/exportPdfYearlySales"><i class="fa-solid fa-download"></i></a>
                     </div>
+                    <br>
                 </div>
-
+              
             </div>
               
             <!-- Sales Chart End -->
@@ -399,7 +406,7 @@
     </div>
 
     <!-- JavaScript Libraries -->
-    
+    <script src="https://kit.fontawesome.com/25c6f8a7a1.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>

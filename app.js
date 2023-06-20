@@ -7,7 +7,9 @@ var logger = require('morgan');
 const { v4: uuidv4 } = require("uuid");
 const bodyParser =require("body-parser")
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://127.0.0.1:27017/Shoeme")
+require('dotenv').config();
+mongoose.connect(process.env.DATABASE_URL)
+
 
 
 
