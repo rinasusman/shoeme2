@@ -470,7 +470,6 @@
                         alert("Some Items are out of stock!");
                     } else if (selectedPayment == "payment-1" || selectedPayment == "payment-2") {
                         let x=document.getElementById('totalAmount').innerText;
-                        localStorage.setItem('Totalvalue', x);
 
                         const url = `http://localhost:3000/placeOrder?addressId=${addressId}&payment=${paymentMethod}&wallet=${walletFlag}`;
                         let options = {

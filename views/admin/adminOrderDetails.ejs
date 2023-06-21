@@ -154,7 +154,162 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
 
+                    <div class="container-fluid">
 
+                        <div class="container">
+                          <!-- Title -->
+                         
+                          <% orderData.forEach((i)=> { %>
+                            <div class="d-flex justify-content-between align-items-center py-3">
+                              <h2 class="h5 mb-0"><a href="#" class="text-muted" style="font-weight: bold;"></a> Order #<%= i._id %>
+                              </h2>
+                            </div>
+                
+                            <!-- Main content -->
+                            <div class="row">
+                              <div class="col-lg-8">
+                                <!-- Details -->
+                                <div class="card mb-4">
+                                  <div class="card-body">
+                                    <div class="mb-3 d-flex justify-content-between">
+                                      <div>
+                                        <span class="me-3">
+                                          <%= i.orderDate %>
+                                        </span>
+                                        <span class="me-3">#<%= i._id %></span>
+                
+                                        <span class="badge rounded-pill bg-info">
+                                          <%= i.status %>
+                                        </span>
+                                      </div>
+                                      <div class="d-flex">
+                                        <!-- <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i class="bi bi-download"></i> <span class="text">Invoice</span></button> -->
+                
+                                      </div>
+                                    </div>
+                                    <table class="table table-borderless">
+                                      <tbody>
+                                        <% i.productDetails.forEach((j)=> { %>
+                                          <tr>
+                                            <td>
+                
+                                              <div class="d-flex mb-2">
+                                                <div class="flex-shrink-0">
+                                                  <img src="/images/uploads/<%= j.imageUrl[0] %>" alt="" width="100" class="img-fluid zoomable">
+                                                </div>
+                                                <div class="flex-lg-grow-1 ms-3">
+                                                  <h6 class="small mb-0"><a href="#" class="text-reset" style="font-weight: bold; font-size: larger;">
+                                                      <%= j.productName %>
+                                                    </a></h6>
+                                                  <span class="small">Color:  <%= j.color %></span>
+                                                  <br>
+                                                  <span class="small">Size:  <%= j.size %></span>
+                                                </div>
+                                              </div>
+                                            </td>
+                                            <% i.item.forEach((j) => { %>
+                                            <td>
+                                            
+                                                <div class="tableHeight">QTY:<%= j.quantity %></div>
+                                            
+                                            </td>
+                                            <% }); %>
+                                      
+                                                <td class="text-end">
+                                                   ₹<%= j.price %>
+                                                </td>
+                
+                                          </tr>
+                                          <% }); %> 
+                                        
+                                      </tbody>
+                                      <tfoot>
+                                        <tr>
+                                          <td colspan="2">Subtotal</td>
+                                          <td class="text-end">₹<%= i.totalPrice %></td>
+                                        </tr>
+                                        <tr>
+                                          <td colspan="2">Shipping</td>
+                                          <td class="text-end">Free</td>
+                                        </tr>
+                                        <tr>
+                                          <td colspan="2"></td>
+                                          <td class="text-danger text-end"></td>
+                                        </tr>
+                                        <tr class="fw-bold">
+                                          <td colspan="2">TOTAL</td>
+                                          <td class="text-end text-danger">₹<%= i.totalPrice %></td>
+                                        </tr>
+                                      </tfoot>
+                                    </table>
+                                  </div>
+                                </div>
+                                <!-- Payment -->
+                                <div class="card mb-4">
+                                  <div class="card-body">
+                                    <div class="row">
+                                      <div class="col-lg-6">
+                                        <h3 class="h6">Payment Method</h3>
+                                        <p><%= i.paymentType %> <br>
+                                          ₹<%= i.totalPrice %> </p>
+                                      </div>
+                                      <div class="col-lg-6">
+                                        <h3 class="h6">Billing address</h3>
+                                        <% userData.address.forEach((i, index)=> { %>
+                                          <address>
+                                            <strong> <%= i.fullname %></strong><br>
+                                            <%= i.address %>, <%= i.city %><br>
+                                            <%= i.country %>,  <%= i.pin %><br>
+                                            <abbr title="Phone">P:</abbr>  <%= i.tel %>
+                                          </address>
+                                        <% }) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <!-- Customer Notes -->
+                                <div class="card mb-4">
+                                  <div class="card-body">
+                                    <h3 class="h6">Expected Delivery Date:</h3>
+                                    <p><%= i.deliveryDate %></p>
+                                    <% if (i.status==='Placed' || i.status==='Shipping' || i.status==='Dispatched' )
+                                                  { %>
+                                                  <button class="btn btn-danger"
+                                                    onclick="cancelOrder('<%= i._id %>')">Cancel</button>
+                                                    <% } if (i.status==='Delivered') 
+                                                    { %>
+                                                      <button class="btn btn-danger"
+                                                      onclick="returnOrder('<%= i._id %>')">Return</button>
+                                                      <% } %>
+                                                      
+                                  </div>
+                                </div>
+                                <div class="card mb-4">
+                                  <!-- Shipping information -->
+                                  <div class="card-body">
+                                    <h3 class="h6">Shipping Information</h3>
+                                    <strong>ShoeME</strong>
+                                    <span><a href="#" class="" target="_blank"><%= i._id %></a> <i
+                                        class="bi bi-box-arrow-up-right"></i> </span>
+                                    <hr>
+                                    <h3 class="h6">Shipping Address</h3>
+                                    <% userData.address.forEach((i, index)=> { %>
+                                      <address>
+                                        <strong> <%= i.fullname %></strong><br>
+                                        <%= i.address %>, <%= i.city %><br>
+                                        <%= i.country %>,  <%= i.pin %><br>
+                                        <abbr title="Phone">P:</abbr>  <%= i.tel %>
+                                      </address>
+                                    <% }) %>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                      </div>
 
 
 
@@ -168,34 +323,39 @@
                                         <tr>
                                             <th style="font-size: smaller;" scope="col">ORDER ID</th>
                                             <th style="font-size: smaller;" scope="col">PRODUCT NAME</th>
-                                          
+                                            <th style="font-size: smaller;" scope="col">PRICE</th>
                                             <th style="font-size: smaller;" scope="col">QUANTITY</th>
                                             <th style="font-size: smaller;" scope="col">PAYMENT TYPE</th>
                                             <th style="font-size: smaller;" scope="col">TOTAL PRICE</th>
                                             <th style="font-size: smaller;" scope="col">ORDER STATUS</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <% orderDatas.forEach(function(i,x) { %>
                                             <tr>
                                                 <td>
-                                                    <a  id="orderIdLink_<%= i._id %>" onclick="orderList('<%= i._id %>')"> <%= i._id %></a>
+                                                    <%= i._id %>
                                                 </td>
-                                                
+                                                <td>
+                                                    <% i.productDetails.forEach((j)=> { %>
+                                                        <div class="tableHeight">
+                                                            <%= j.productName %>
+                                                        </div>
+                                                        <% }); %>
+                                                </td>
                                                 <td>
                                                     <% i.item.forEach((j)=> { %>
                                                         <div class="tableHeight">
                                                             <%= j.price %>
                                                         </div>
-                                                    <% }); %>
+                                                        <% }); %>
                                                 </td>
                                                 <td>
                                                     <% i.item.forEach((j)=> { %>
                                                         <div class="tableHeight">
                                                             <%= j.quantity %>
                                                         </div>
-                                                    <% }); %>
+                                                        <% }); %>
                                                 </td>
                                                 <td>
                                                     <%= i.paymentType %>
@@ -204,23 +364,30 @@
                                                     <%= i.totalPrice %>
                                                 </td>
                                                 <td style="color: red;">
-                                                    <select id="statusDropdown" onchange="changestatus(event, '<%= i._id %>')">
-                                                        <option value="Placed" <%=i.status==="Placed" ? "selected" : "" %>>Placed</option>
-                                                        <option value="Shipping" <%=i.status==="Shipping" ? "selected" : "" %>>Shipping</option>
-                                                        <option value="Dispatched" <%=i.status==="Dispatched" ? "selected" : "" %>>Dispatched</option>
-                                                        <option value="Delivered" <%=i.status==="Delivered" ? "selected" : "" %>>Delivered</option>
-                                                        <option value="Cancelled" <%=i.status==="Cancelled" ? "selected" : "" %>>Cancelled</option>
-                                                        <option value="Return" <%=i.status==="Return" ? "selected" : "" %>>Return</option>
+                                                    <select id="statusDropdown"
+                                                        onchange="changestatus(event, '<%= i._id %>')">
+                                                        <option value="Placed" <%=i.status==="Placed" ? "selected" : ""
+                                                            %>>Placed
+                                                        </option>
+                                                        <option value="Shipping" <%=i.status==="Shipping" ? "selected"
+                                                            : "" %>>Shipping
+                                                        </option>
+                                                        <option value="Dispatched" <%=i.status==="Dispatched"
+                                                            ? "selected" : "" %>
+                                                            >Dispatched</option>
+                                                        <option value="Delivered" <%=i.status==="Delivered" ? "selected"
+                                                            : "" %>
+                                                            >Delivered</option>
+                                                        <option value="Cancelled" <%=i.status==="Cancelled" ? "selected"
+                                                            : "" %>
+                                                            >Cancelled</option>
+                                                            <option value="Cancelled" <%=i.status==="Return" ? "selected"
+                                                            : "" %>
+                                                            >Return</option>
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <a onclick="orderList('<%= i._id %>')">More-details</a>
-                                                </td>
                                             </tr>
-                                        <% }); %>
-                                        
-                                        
-                                        
+                                            <% }); %>
 
                                     </tbody>
                                 </table>
@@ -323,32 +490,6 @@
         }
 
     </script>
-   <script>
-    function orderList(Id) {
-        fetch("/admin/orderdetails", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ Id })
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error("Request failed.");
-            }
-        })
-        .then(html => {
-            document.open();
-            document.write(html);
-            document.close();
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    }
-</script>
 </body>
 
 </html>

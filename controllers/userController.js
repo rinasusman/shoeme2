@@ -9,7 +9,7 @@ const Banner = require('../models/bannerModel');
 const Wishlist = require("../models/wishlistModel");
 const Coupon = require("../models/couponModel");
 const { ObjectId } = require("mongodb");
-require('dotenv').config();
+
 const Razorpay = require("razorpay");
 
 
@@ -1526,9 +1526,7 @@ const cancelSelection = async (req, res) => {
 const createRP = async (req, res) => {
   const userId = req.body.userId.replace(/\s/g, "")
   const wallet = req.body.wallet
- 
-  const paymentMethod = req.body.paymentMethod
-
+  const paymentMethod=req.body.paymentMethod
   const cartData = await Cart.aggregate([
     {
       $match: {
@@ -1561,29 +1559,30 @@ const createRP = async (req, res) => {
       $unwind: "$item.product.category",
     },
   ]);
-  let ValidOrder = true
-  for (j = 0; j < cartData.length; j++) {
-    if (cartData[j].item.product.isDeleted === true || cartData[j].item.product.isCategoryDeleted === true || cartData[j].item.product.stock < cartData[j].item.quantity) {
-      ValidOrder = false
+  let ValidOrder=true
+  for(j=0;j<cartData.length;j++)
+  {
+    if(cartData[j].item.product.isDeleted===true || cartData[j].item.product.isCategoryDeleted===true || cartData[j].item.product.stock <cartData[j].item.quantity)
+    {
+      ValidOrder=false
     }
   }
-  if (ValidOrder === false) {
+  if(ValidOrder===false)
+  {
     res.json({ rpOrderId: null });
-  } else {
+  }else{
     const userData = await User.findById(userId)
-    if (paymentMethod == 0) {
+    if(paymentMethod==0)
+    {
       res.json({ rpOrderId: 0 });
-    } else {
-      let instance = new Razorpay({ key_id: process.env.KEY_ID, key_secret: process.env.KEY_SECRET })
+    }else{
+      let instance = new Razorpay({ key_id:'rzp_test_Z6ogCp3lsMS6mX', key_secret: "GfeGBYD3Jojxqd7vdqZoRzzP" })
       let amount
       if (wallet) {
         amount = cartData[0].totalPrice - userData.wallet
-      }
-     
-      else {
+      } else {
         amount = cartData[0].totalPrice
       }
-      // let amount = 100
       let options = {
         amount: amount,
         currency: "INR",
@@ -1595,8 +1594,9 @@ const createRP = async (req, res) => {
     }
 
   }
-
+  
 }
+
 
 
 module.exports = {

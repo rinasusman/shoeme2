@@ -33,6 +33,7 @@ adminRoute.get('/dashboard', auth.adminLogin, adminController.dashboardload);
 // ================ user management ================//
 adminRoute.get('/userlist', auth.adminLogin, adminController.userlistload);
 adminRoute.get('/orderlist', auth.adminLogin, adminController.orderlistload);
+adminRoute.post('/orderdetails', auth.adminLogin, adminController.orderlistloads);
 adminRoute.post("/blockUnblockUser", auth.adminLogin, adminController.userBlockUnblock);
 adminRoute.post("/userorderList", auth.adminLogin, adminController.userorderList);
 adminRoute.post("/updateStatus", auth.adminLogin, adminController.updateStatus)

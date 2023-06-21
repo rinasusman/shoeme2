@@ -165,6 +165,77 @@ const orderlistload = async (req, res) => {
         res.status(500).send("Error retrieving order details.");
     }
 };
+
+const orderlistloads = async (req, res) => {
+
+    try {
+        const OrderId = new ObjectId(req.params.id);
+        console.log(OrderId,"iiiiiiiiiiiiiiiiiii");
+        const orders = await Order.aggregate([
+            {
+                $match: { _id: OrderId  }
+            },
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "item.product",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+            {
+                $sort: { _id: -1 }
+            }
+        ]);
+        if (orders.length != 0) {
+            res.render("adminOrderDetails", { orderData: orders, text: "" });
+        } else {
+            res.render("adminOrderDetails", { orderData: orders, text: "No orders placed" });
+        }
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error retrieving order details.");
+    }
+
+
+
+
+
+
+
+
+//     if (req.params.id) {
+//     try {
+//         const OrderId = new ObjectId(req.params.id);
+//         const orders = await Order.aggregate([
+//             {
+//                 $match: { _id: OrderId }
+//               },
+//             {
+//                 $lookup: {
+//                     from: "products",
+//                     localField: "item.product",
+//                     foreignField: "_id",
+//                     as: "productDetails"
+//                 }
+//             },
+//             {
+//                 $sort: { _id: -1 }
+//             }
+//         ]);
+//         if (orders.length != 0) {
+//             res.render("adminOrderDetails", { orderDatas: orders, text: "" });
+//         } else {
+//             res.render("adminOrderDetails", { orderDatas: orders, text: "No orders placed" });
+//         }
+
+//     } catch (err) {
+//         console.log(err.message);
+//         res.status(500).send("Error retrieving order details.");
+//     }
+// }
+};
 const userBlockUnblock = (req, res) => {
     const id = req.body.id;
     const type = req.body.type;
@@ -858,5 +929,6 @@ module.exports = {
     fetchlineChartData,
     fetchbarChartData,
     fetchpieChartData,
-    exportPdfDailySales 
+    exportPdfDailySales ,
+    orderlistloads 
 }
