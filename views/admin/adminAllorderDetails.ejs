@@ -118,7 +118,12 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control border-0" id="search" name="search"  type="search" placeholder="Search">
+                    <br>
+                    <button type="submit" class="bg-primary text-white" style="border: none; margin-left: 10px; border-radius: 5px;"
+                            onclick="event.preventDefault(); searchAndPagination('search')">SEARCH</button>
+                </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
 
@@ -149,79 +154,140 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
 
-
-
-
-
-
-                    <div class="col-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">ORDER DETAILS</h6>
-                            <div class="table-responsive" >
-                                <table class="table" id="myTable">
-                                    <thead>
-                                        <tr>
-                                            <th style="font-size: smaller;" scope="col">SL.NO</th>
-                                            <th style="font-size: smaller;" scope="col">ORDER ID</th>
-                                            <th style="font-size: smaller;" scope="col">PRODUCT NAME</th>
-                                         
-                                            <th style="font-size: smaller;" scope="col">PAYMENT TYPE</th>
-                                            <th style="font-size: smaller;" scope="col">TOTAL PRICE</th>
-                                            <th style="font-size: smaller;" scope="col">ORDER STATUS</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% orderDatas.forEach(function(i,x) { %>
-                                            <tr>
-                                                <td> <%= x+1 %></td>
-                                                <td><a  href='/admin/adminAllorderDetails/<%= i._id %>'> <%= i._id %></a>
-                                                
-                                                </td>
-                                                <td>
-                                                    <% i.productDetails.forEach((j)=> { %>
-                                                        <div class="tableHeight" name="name">
-                                                            <%= j.productName %>
-                                                        </div>
-                                                        <% }); %>
-                                                </td>
-                                               
-                                               
-                                                <td>
-                                                    <%= i.paymentType %>
-                                                </td>
-                                                <td>
-                                                    <%= i.totalPrice %>
-                                                </td>
-                                                <td style="color: <%= i.status === 'Placed' ? 'orange' : (i.status === 'Cancelled' ? 'red' : 'green') %>"><%= i.status %></td>
-                                               
-                                            </tr>
-                                            <% }); %>
-                                            
-
-                                    </tbody>
-                                </table>
-                                <h2 class="text-danger text-center">
-                                    <%= text %>
-                                </h2>
-                                <div class="store-filter clearfix">
-                                    <div class="store-pagination" style="text-align: center;">
-                                        <ul class="pagination-list"
-                                            style="display: inline-block; list-style-type: none; margin: 0; padding: 0;">
-                                            <% for (let i=1; i <= totalPages; i++) { %>
-                                                <li <% if (i===page) { %>class="active"<% } %> style="display: inline-block; margin: 0 5px;">
-                                                  <button onclick="searchAndPagination('<%= i %>')" style="text-decoration: none; padding: 5px 10px; border: 1px solid #ccc; <% if (i===page) { %>background-color: #ccc; color: white;<% } %>">
-                                                    <%= i %>
-                                                  </button>
-                                                </li>
-                                              <% } %>
-                                              
-                                        </ul>
+                    <div class="container">
+                        <!-- Title -->
+                       
+                        <% orderData.forEach((i)=> { %>
+                          <div class="d-flex justify-content-between align-items-center py-3">
+                            <h2 class="h5 mb-0"><a href="#" class="text-muted" style="font-weight: bold;"></a> Order #<%= i._id %>
+                            </h2>
+                          </div>
+              
+                          <!-- Main content -->
+                          <div class="row">
+                            <div class="col-lg-8">
+                              <!-- Details -->
+                              <div class="card mb-4">
+                                <div class="card-body">
+                                  <div class="mb-3 d-flex justify-content-between">
+                                    <div>
+                                      <span class="me-3">
+                                        <%= i.orderDate %>
+                                      </span>
+                                      <span class="me-3">#<%= i._id %></span>
+                                      <span class="badge">
+                                        
+                                        <select id="statusDropdown"
+                                        onchange="changestatus(event, '<%= i._id %>')">
+                                        <option value="Placed" <%=i.status==="Placed" ? "selected" : ""
+                                            %>>Placed
+                                        </option>
+                                        <option value="Shipping" <%=i.status==="Shipping" ? "selected"
+                                            : "" %>>Shipping
+                                        </option>
+                                        <option value="Dispatched" <%=i.status==="Dispatched"
+                                            ? "selected" : "" %>
+                                            >Dispatched</option>
+                                        <option value="Delivered" <%=i.status==="Delivered" ? "selected"
+                                            : "" %>
+                                            >Delivered</option>
+                                        <option value="Cancelled" <%=i.status==="Cancelled" ? "selected"
+                                            : "" %>
+                                            >Cancelled</option>
+                                            <option value="Cancelled" <%=i.status==="Return" ? "selected"
+                                            : "" %>
+                                            >Return</option>
+                                    </select>
+                                      </span>
                                     </div>
-                                </div >
+                                    <div class="d-flex">
+                                      <!-- <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i class="bi bi-download"></i> <span class="text">Invoice</span></button> -->
+              
+                                    </div>
+                                  </div>
+                                  <table class="table table-borderless">
+                                    <tbody>
+                                      <% i.productDetails.forEach((j)=> { %>
+                                        <tr>
+                                          <td>
+              
+                                            <div class="d-flex mb-2">
+                                              <div class="flex-shrink-0">
+                                                <img src="/images/uploads/<%= j.imageUrl[0] %>" alt="" width="100" class="img-fluid zoomable">
+                                              </div>
+                                              <div class="flex-lg-grow-1 ms-3">
+                                                <h6 class="small mb-0"><a href="#" class="text-reset" style="font-weight: bold; font-size: larger;">
+                                                    <%= j.productName %>
+                                                  </a></h6>
+                                                <span class="small">Color:  <%= j.color %></span>
+                                                <br>
+                                                <span class="small">Size:  <%= j.size %></span>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <% i.item.forEach((j) => { %>
+                                          <td>
+                                          
+                                              <div class="tableHeight">QTY:<%= j.quantity %></div>
+                                          
+                                          </td>
+                                          <% }); %>
+                                    
+                                              <td class="text-end">
+                                                 ₹<%= j.price %>
+                                              </td>
+              
+                                        </tr>
+                                        <% }); %> 
+                                      
+                                    </tbody>
+                                    <tfoot>
+                                      <tr>
+                                        <td colspan="2">Subtotal</td>
+                                        <td class="text-end">₹<%= i.totalPrice %></td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="2">Shipping</td>
+                                        <td class="text-end">Free</td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="2"></td>
+                                        <td class="text-danger text-end"></td>
+                                      </tr>
+                                      <tr class="fw-bold">
+                                        <td colspan="2">TOTAL</td>
+                                        <td class="text-end text-danger">₹<%= i.totalPrice %></td>
+                                      </tr>
+                                    </tfoot>
+                                  </table>
+                                </div>
+                              </div>
+                              <!-- Payment -->
+                              
                             </div>
-                        </div>
+                            <div class="col-lg-4">
+                              <!-- Customer Notes -->
+                              <div class="card mb-4">
+                                <div class="card-body">
+                                  <h3 class="h6">Expected Delivery Date:</h3>
+                                  <p><%= i.deliveryDate %></p>
+                                  <h3 class="h6">Payment Method</h3>
+                                  <p><%= i.paymentType %> <br>
+                                    ₹<%= i.totalPrice %> </p>
+                                                    
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+                      </div>
+                      <% }); %>
                     </div>
+
+
+
+
+                    
                 </div>
             </div>
 
@@ -279,12 +345,6 @@
             });
         });
     </script>
-    <script> function searchAndPagination(page) {
-        
-        const url = `/admin/orderlist?page=${page}`;
-        window.location.href = url;
-
-    }</script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/admin/lib/chart/chart.min.js"></script>
@@ -297,7 +357,28 @@
 
     <!-- Template Javascript -->
     <script src="/admin/js/main.js"></script>
-  
+    <script>
+        function changestatus(event, id) {
+            fetch('/admin/updateStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ statusvalue: event.target.value, id: id })
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        console.log('Status updated successfully');
+                    } else {
+                        console.error('Failed to update status');
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        }
+
+    </script>
     
     <script>
         function changestatus(event, id) {

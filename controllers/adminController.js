@@ -140,7 +140,19 @@ const userlistload = async (req, res) => {
 };
 const orderlistload = async (req, res) => {
     try {
-        
+        const page = parseInt(req.query.page, 10) || 1;
+    const search = req.query.search
+
+    const limit = 5;
+    const skip = (page - 1) * limit;
+
+    const query = {};
+
+    if (search) {
+        query.name = { $regex: search, $options: "i" };
+    }
+    const totalOrders = await Order.countDocuments(query)
+    const totalPages = Math.ceil(totalOrders / limit);
         const orders = await Order.aggregate([
             {
                 $lookup: {
@@ -153,11 +165,11 @@ const orderlistload = async (req, res) => {
             {
                 $sort: { _id: -1 }
             }
-        ]);
+        ]).sort({_id: -1}).skip(skip).limit(limit);
         if (orders.length != 0) {
-            res.render("adminAllorder", { orderDatas: orders, text: "" });
+            res.render("adminAllorder", { orderDatas: orders,totalPages, page, text: "" });
         } else {
-            res.render("adminAllorder", { orderDatas: orders, text: "No orders placed" });
+            res.render("adminAllorder", { orderDatas: orders,totalPages, page, text: "No orders placed" });
         }
 
     } catch (err) {
@@ -165,7 +177,69 @@ const orderlistload = async (req, res) => {
         res.status(500).send("Error retrieving order details.");
     }
 };
+const orderDatas = async (req, res) => {
+    
+    if (req.params.id) {
+        try {
+          
+          const OrderId = new ObjectId(req.params.id);
+       
+        //   const user = await User.findOne({ _id: OrderId });
+          console.log(OrderId,"userrrrrrrrrrrrrrrrr");
+          const orderDetails = await Order.aggregate([
+            {
+              $match: { _id: OrderId }
+            },
+            {
+              $lookup: {
+                from: "products",
+                localField: "item.product",
+                foreignField: "_id",
+                as: "productDetails"
+              }
+            }, {
+              $sort: { _id: -1 }
+            }
+          ]);
+         console.log(orderDetails,"orderDetails");
+          orderDetails.forEach((order) => {
+            order.orderDate = order.orderDate.toISOString().split("T")[0];
+            order.deliveryDate = order.deliveryDate.toISOString().split("T")[0];
+          });
+          const user=orderDetails[0].userId
 
+          res.render("adminAllorderDetails", {userData: user, orderData: orderDetails });
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+
+    // try {
+        
+    //     const orders = await Order.aggregate([
+    //         {
+    //             $lookup: {
+    //                 from: "products",
+    //                 localField: "item.product",
+    //                 foreignField: "_id",
+    //                 as: "productDetails"
+    //             }
+    //         },
+    //         {
+    //             $sort: { _id: -1 }
+    //         }
+    //     ]);
+    //     if (orders.length != 0) {
+    //         res.render("adminAllorder", { orderDatas: orders, text: "" });
+    //     } else {
+    //         res.render("adminAllorder", { orderDatas: orders, text: "No orders placed" });
+    //     }
+
+    // } catch (err) {
+    //     console.log(err.message);
+    //     res.status(500).send("Error retrieving order details.");
+    // }
+};
 const orderlistloads = async (req, res) => {
 
     try {
@@ -930,5 +1004,6 @@ module.exports = {
     fetchbarChartData,
     fetchpieChartData,
     exportPdfDailySales ,
-    orderlistloads 
+    orderlistloads,orderDatas
+    
 }
