@@ -1,9 +1,9 @@
-var createError = require('http-errors');
-var express = require('express');
+const createError = require('http-errors');
+const express = require('express');
 const session = require('express-session');
 const path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const { v4: uuidv4 } = require("uuid");
 const bodyParser =require("body-parser")
 const mongoose = require('mongoose');
