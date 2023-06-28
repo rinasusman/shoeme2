@@ -472,7 +472,7 @@
                     } else if (selectedPayment == "payment-1" || selectedPayment == "payment-2") {
                         let x=document.getElementById('totalAmount').innerText;
 
-                        const url = `http://localhost:3000/placeOrder?addressId=${addressId}&payment=${paymentMethod}&wallet=${walletFlag}`;
+                        const url = `https://shoemee.shop/placeOrder?addressId=${addressId}&payment=${paymentMethod}&wallet=${walletFlag}`;
                         let options = {
                             "key": "rzp_test_Z6ogCp3lsMS6mX",
                             "amount": Math.round(x * 100), // Updated to round off the value
