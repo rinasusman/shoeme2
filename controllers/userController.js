@@ -1155,9 +1155,8 @@ const returnOrder = async (req, res) => {
       updates.push(update)
     }
     await Product.bulkWrite(updates)
-    const currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() + 7); 
-    await Order.updateOne({ _id: orderId }, { $set: { status: "Return", returnDate: currentDate } });
+   
+    await Order.updateOne({ _id: orderId }, { $set: { status: "Return" } });
     // await Order.updateOne({ _id: orderId }, { $set: { status: "Return" } })
     res.redirect("/orders");
   } catch (error) {

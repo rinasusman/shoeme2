@@ -36,9 +36,7 @@ const orderSchema = mongoose.Schema({
       return currentDate;
     }
   },
-  returnDate: {
-    type: Date,
-  },
+
   status: {
     type: String,
     default:"Placed"
