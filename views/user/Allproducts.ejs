@@ -198,7 +198,7 @@ crossorigin="anonymous"></script>
             
     
                                 <!-- Product Grid -->
-    
+								<% if(data.length>0) { %>
                                 <div class="product-grid">
     
                                     <!-- Product Item -->
@@ -228,6 +228,13 @@ crossorigin="anonymous"></script>
 										<% }); %>
     
                                 </div>
+								<% } else { %>
+									<div class="text-center">
+									  <h4 class="text-danger">No Products!</h4>
+									  <br>
+								
+									</div>
+								  <% } %>
 								<div class="row">
 									<div class="store-filter text-center">
 									  <ul class="store-pagination d-flex justify-content-center">
