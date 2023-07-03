@@ -416,48 +416,49 @@ const sortedProductList = async (req, res) => {
       },
       {
         $unwind: "$category",
-      },
-      {
+      }, {
         $match: {
           isDeleted: false,
-          isCategoryDeleted: false,
+          isCategoryDeleted:false,
           "category._id": categoryId,
-          stock: { $ne: 0 },
-        },
-      },
+          stock: { $ne: 0 }
+        }
+      }
     ]);
-    const colorOption = [...new Set(entireProductData.map((obj) => obj.color))];
-    const brandOption = [...new Set(entireProductData.map((obj) => obj.brand))];
-    const sizeOption = [...new Set(entireProductData.map((obj) => obj.size))];
+    const colorOption = [...new Set(entireProductData.map(obj => obj.color))];
+    const brandOption = [...new Set(entireProductData.map(obj => obj.brand))];
+    const sizeOption = [...new Set(entireProductData.map(obj => obj.size))];
 
-    const sortValue = parseInt(req.query.value, 10);
-    const color = req.query.color ? req.query.color.split(",") : [];
-    const brand = req.query.brand ? req.query.brand.split(",") : [];
-    const size = req.query.size ? req.query.size.split(",") : [];
-    const page = parseInt(req.query.page, 10) - 1;
-    const limitVal = parseInt(req.query.limit, 10);
 
+    const sortValue = parseInt(req.query.value, 10)
+    const color = req.query.color ? req.query.color.split(",") : []
+    const brand = req.query.brand ? req.query.brand.split(",") : []
+    const size = req.query.size ? req.query.size.split(",") : []
+    const page = parseInt(req.query.page, 10) - 1
+    const limitVal = parseInt(req.query.limit, 10)
+    
     let query = {
       isDeleted: false,
-      isCategoryDeleted: false,
+      isCategoryDeleted:false,
       "category._id": categoryId,
-      stock: { $ne: 0 },
-    };
+      stock: { $ne: 0 }
+    }
     if (brand.length > 0) {
-      query.brand = { $in: brand };
+      query.brand = { $in: brand }
     }
     if (size.length > 0) {
-      query.size = { $in: size };
+      query.size = { $in: size }
     }
     if (color.length > 0) {
-      query.color = { $in: color };
+      query.color = { $in: color }
     }
+
 
     let z = {
       $sort: {
         price: sortValue,
       },
-    };
+    }
 
     let y = [
       {
@@ -470,74 +471,34 @@ const sortedProductList = async (req, res) => {
       },
       {
         $unwind: "$category",
-      },
-      {
+      }, {
         $match: query,
       },
-    ];
+    ]
 
     if (sortValue != 0) {
-      y.push(z);
+      y.push(z)
     }
-    const sortedProductData = await Product.aggregate(y)
-      .skip(page * limitVal)
-      .limit(limitVal);
-    const categoryProducts = await Product.aggregate(y);
-    const totalPages = Math.ceil(categoryProducts.length / limitVal);
-
+    const sortedProductData = await Product.aggregate(y).skip(page*limitVal).limit(limitVal)
+    const categoryProducts=await Product.aggregate(y)
+    const totalPages=Math.ceil(categoryProducts.length/limitVal)
     if (req.session.user) {
       userData = req.session.user;
       User.findOne({ _id: userData }).then((user) => {
-        if (sortedProductData.length === 0) {
-          // No products available, show message
-          res.render("noProductMessage", {
-            userData: user,
-            categoryId: categoryId,
-          });
-        } else {
-          res.render("productList", {
-            userData: user,
-            data: sortedProductData,
-            sort: sortValue,
-            colorSelected: color,
-            brandSelected: brand,
-            sizeSelected: size,
-            brandOption: brandOption,
-            sizeOption: sizeOption,
-            colorOption: colorOption,
-            categoryId: categoryId,
-            page: page + 1,
-            totalPages: totalPages,
-            limitVal: limitVal,
-          });
-        }
+        res.render("productList", {
+          userData: user,
+          data: sortedProductData,
+          sort: sortValue, colorSelected: color, brandSelected: brand, sizeSelected: size, brandOption: brandOption, sizeOption: sizeOption, colorOption: colorOption, categoryId: categoryId, page: page + 1,totalPages:totalPages,limitVal:limitVal,
+        });
       });
     } else {
-      if (sortedProductData.length === 0) {
-        // No products available, show message
-        res.render("noProductMessage", { categoryId: categoryId });
-      } else {
-        res.render("productList", {
-          data: sortedProductData,
-          sort: sortValue,
-          colorSelected: color,
-          brandSelected: brand,
-          sizeSelected: size,
-          brandOption: brandOption,
-          sizeOption: sizeOption,
-          colorOption: colorOption,
-          categoryId: categoryId,
-          page: page + 1,
-          totalPages: totalPages,
-          limitVal: limitVal,
-        });
-      }
+      res.render("productList", { data: sortedProductData, sort: sortValue, colorSelected: color, brandSelected: brand, sizeSelected: size, brandOption: brandOption, sizeOption: sizeOption, colorOption: colorOption, categoryId: categoryId, page: page + 1,totalPages:totalPages,limitVal:limitVal });
     }
+
   } catch (error) {
     console.log(error.message);
   }
 };
-
 
 
 
