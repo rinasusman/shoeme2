@@ -72,6 +72,7 @@ const sendOtp = async (req, res) => {
 
     const emailExist = await User.findOne({ email: req.body.email ? req.body.email : email });
     const mobileExist = await User.findOne({ number: req.body.number ? req.body.number : number });
+    console.log(mobileExist,"mobileeeeeeeeeeeee");
     if (!emailExist || ! mobileExist) {
       if (!saveOtp) {
         let generatedOtp = generateOTP();
