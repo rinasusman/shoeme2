@@ -75,6 +75,7 @@
                     <div class="row">
 
                         <!--================Cart Area =================-->
+                        <% if(items.length>0) { %>
                         <div class="cart-table-area section-padding-100">
                             <div class="container-fluid">
                                 <div class="row">
@@ -147,11 +148,20 @@
                                             <br>
                                             <a class="text-primary" href="/">Continue Shopping</a>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        <% } else { %>
+                            <div class="text-center">
+                              <h4 class="text-danger">Cart is Empty!</h4>
+                              <br>
+                              <div class="checkout_btn_inner">
+                                <a class="btn btn-primary" href="/">Continue Shopping</a>
+                              </div>
+                            </div>
+                          <% } %>
 
                         <!--================End Cart Area =================-->
 
