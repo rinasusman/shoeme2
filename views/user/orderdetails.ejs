@@ -267,22 +267,22 @@
                 <!-- Customer Notes -->
                 <div class="card mb-4">
                   <div class="card-body">
-                 
                     <% if (i.status==='Placed' || i.status==='Shipping' || i.status==='Dispatched' )
                     { %>
-                      <h3 class="h6">Expected Delivery Date:</h3>
-                      <p><%= i.returnDate %></p>
-                      <% } if (i.status==='Delivered') 
-                      { %>
-                        <h3 class="h6">last Date of return:</h3>
-                        <p><%= i.deliveryDate %></p>
-                        <% } %>
+                    
+                    <% } %>
+                    
                     <% if (i.status==='Placed' || i.status==='Shipping' || i.status==='Dispatched' )
                                   { %>
+                                    <h3 class="h6">Expected Delivery Date:</h3>
+                    <p><%= i.deliveryDate %></p>
+                    <br>
                                   <button class="btn btn-danger"
                                     onclick="cancelOrder('<%= i._id %>')">Cancel</button>
                                     <% } if (i.status==='Delivered') 
                                     { %>
+                                      <h3 class="h6">Expected Delivery Date:</h3>
+                    <p><%= i.returnDate %></p>
                                       <button class="btn btn-danger"
                                       onclick="returnOrder('<%= i._id %>')">Return</button>
                                       <% } %>
