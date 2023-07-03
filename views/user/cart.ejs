@@ -299,26 +299,60 @@
 			}
            
 
-        async function removeCartItem(cartId, itemId) {
+            async function removeCartItem(cartId, itemId) {
             try {
-                const response = await fetch("/removeCartItem", {
+                // cartdelete()
+                swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this Cart Item!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+}).then((willDelete)=>{
+    if(willDelete){
+        cartdelete() 
+    }else {
+    swal("Your Cart item is safe!");
+  }
+   
+})
+
+
+
+
+async function cartdelete() {
+ await fetch("/removeCartItem", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ itemId: itemId, cartId: cartId }),
                 })
-                    .then(response => {
-                        location.reload();
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+                .then((res)=>res.json())
+                .then((res) => {
+
+  if (res.success===true) {
+    swal("Poof! Your Cart item has been deleted!", {
+      icon: "success",
+    });
+    location.reload()
+  } else {
+    swal("Your Cart item is safe!");
+  }
+}).catch((error)=>{
+    console.log(error.message)
+})
+
+}
+                
+
+
+                   
             } catch (error) {
                 console.error(error);
             }
         }
 
-
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/template/js/jquery-3.2.1.min.js"></script>
     <script src="/template/styles/bootstrap4/popper.js"></script>
     <script src="/template/styles/bootstrap4/bootstrap.min.js"></script>
