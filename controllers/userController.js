@@ -71,7 +71,8 @@ const sendOtp = async (req, res) => {
   try {
 
     const emailExist = await User.findOne({ email: req.body.email ? req.body.email : email });
-    if (!emailExist) {
+    const mobileExist = await User.findOne({ number: req.body.number ? req.body.number : number });
+    if (!emailExist || ! mobileExist) {
       if (!saveOtp) {
         let generatedOtp = generateOTP();
         saveOtp = generatedOtp;
@@ -1083,12 +1084,13 @@ const orderDatas = async (req, res) => {
           $sort: { _id: -1 }
         }
       ]);
+      const orderaddress= orderDetails[0].address[0]
      
       orderDetails.forEach((order) => {
         order.orderDate = order.orderDate.toISOString().split("T")[0];
         order.deliveryDate = order.deliveryDate.toISOString().split("T")[0];
       });
-      res.render("orderdetails", { userData: user, orderData: orderDetails });
+      res.render("orderdetails", { userData: user, orderData: orderDetails,orderaddress});
     } catch (error) {
       console.log(error.message);
     }

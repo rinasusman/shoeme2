@@ -6,16 +6,16 @@ let countryNameValid = false
 let addressValid = false;
 let cityNameValid = false;
 
-// function updateASubmitButton() {
+function updateASubmitButton() {
 
-//     const submitButton = document.getElementById('aSubmitButton');
+    const submitButton = document.getElementById('aSubmitButton');
 
-//     if (aName && aEmail && aNumber && pinCodeValid && countryNameValid && cityNameValid && addressValid) {
-//         submitButton.removeAttribute('disabled');
-//     } else {
-//         submitButton.setAttribute('disabled', 'disabled');
-//     }
-// }
+    if (aName && aEmail && aNumber && pinCodeValid && countryNameValid && cityNameValid && addressValid) {
+        submitButton.removeAttribute('disabled');
+    } else {
+        submitButton.setAttribute('disabled', 'disabled');
+    }
+}
 
 function validateAName() {
     let name = document.getElementById("aName").value.trim()
@@ -29,7 +29,7 @@ function validateAName() {
     } else {
         aName = true;
         document.getElementById("aNameError").innerText = ""
-        // updateASubmitButton();
+        updateASubmitButton();
     }
 }
 
@@ -45,7 +45,7 @@ function validateAEmail() {
     } else {
         aEmail = true
         document.getElementById("aEmailError").innerText = ""
-        // updateASubmitButton();
+        updateASubmitButton();
     }
 }
 
@@ -62,7 +62,7 @@ function validateAMobile() {
     } else {
         aNumber = true
         document.getElementById("aNumberError").innerText = ""
-        // updateASubmitButton();
+        updateASubmitButton();
     }
 }
 
@@ -79,7 +79,7 @@ function validatePinCode() {
     } else {
         pinCodeValid = true;
         document.getElementById("pinError").innerText = "";
-        // updateASubmitButton();
+        updateASubmitButton();
     }
 }
 
@@ -95,7 +95,7 @@ function validateCountryName() {
     } else {
         countryNameValid = true;
         document.getElementById("countryNameError").innerText = "";
-        // updateASubmitButton();
+        updateASubmitButton();
     }
 }
 
@@ -111,7 +111,7 @@ function validateCityName() {
     } else {
         cityNameValid = true;
         document.getElementById("cityNameError").innerText = "";
-        // updateASubmitButton();
+        updateASubmitButton();
     }
 }
 

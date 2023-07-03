@@ -250,14 +250,14 @@
                       </div>
                       <div class="col-lg-6">
                         <h3 class="h6">Billing address</h3>
-                        <% userData.address.forEach((i, index)=> { %>
+                     
                           <address>
-                            <strong> <%= i.fullname %></strong><br>
-                            <%= i.address %>, <%= i.city %><br>
-                            <%= i.country %>,  <%= i.pin %><br>
-                            <abbr title="Phone">P:</abbr>  <%= i.tel %>
+                            <strong> <%= orderaddress.fullname %></strong><br>
+                            <%= orderaddress.address %>, <%= orderaddress.city %><br>
+                            <%= orderaddress.country %>,  <%= orderaddress.pin %><br>
+                            <abbr title="Phone">P:</abbr>  <%= orderaddress.tel %>
                           </address>
-                        <% }) %>
+                     
                       </div>
                     </div>
                   </div>
@@ -267,8 +267,11 @@
                 <!-- Customer Notes -->
                 <div class="card mb-4">
                   <div class="card-body">
+                    <% if (i.status==='Placed' || i.status==='Shipping' || i.status==='Dispatched' )
+                    { %>
                     <h3 class="h6">Expected Delivery Date:</h3>
                     <p><%= i.deliveryDate %></p>
+                    <% } %>
                     <% if (i.status==='Placed' || i.status==='Shipping' || i.status==='Dispatched' )
                                   { %>
                                   <button class="btn btn-danger"
@@ -290,14 +293,14 @@
                         class="bi bi-box-arrow-up-right"></i> </span>
                     <hr>
                     <h3 class="h6">Shipping Address</h3>
-                    <% userData.address.forEach((i, index)=> { %>
+                   
                       <address>
-                        <strong> <%= i.fullname %></strong><br>
-                        <%= i.address %>, <%= i.city %><br>
-                        <%= i.country %>,  <%= i.pin %><br>
-                        <abbr title="Phone">P:</abbr>  <%= i.tel %>
+                        <strong> <%= orderaddress.fullname %></strong><br>
+                        <%= orderaddress.address %>, <%= orderaddress.city %><br>
+                        <%= orderaddress.country %>,  <%= orderaddress.pin %><br>
+                        <abbr title="Phone">P:</abbr>  <%= orderaddress.tel %>
                       </address>
-                    <% }) %>
+                
                   </div>
                 </div>
               </div>
