@@ -1131,6 +1131,7 @@ const returnOrder = async (req, res) => {
     const orderId = req.query.orderId;
     let userId = new ObjectId(req.session.user);
     const user = await User.findOne({ _id: userId });
+    
     const orderDetails = await Order.findById({ _id: orderId })
     if (orderDetails.paymentType === 'UPI') {
       const totalPrice = orderDetails.totalPrice
@@ -1154,7 +1155,10 @@ const returnOrder = async (req, res) => {
       updates.push(update)
     }
     await Product.bulkWrite(updates)
-    await Order.updateOne({ _id: orderId }, { $set: { status: "Return" } })
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 7); 
+    await Order.updateOne({ _id: orderId }, { $set: { status: "Return", returnDate: currentDate } });
+    // await Order.updateOne({ _id: orderId }, { $set: { status: "Return" } })
     res.redirect("/orders");
   } catch (error) {
     console.log(error.message);
