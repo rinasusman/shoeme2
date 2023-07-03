@@ -149,7 +149,7 @@
             <thead style="border: none;">
               <tr>
                 <th scope="col">DATE</th>
-                <th scope="col">ORDER ID</th>
+                <th scope="col">PRODUCT</th>
                 <th scope="col">PAYMENT METHOD</th>
                 <th scope="col">TOTAL</th>
                 <th scope="col">ORDER STATUS</th>
@@ -160,12 +160,12 @@
               <% orderData.forEach((i)=> { %>
               <tr>
                 <th scope="row"><%= i.orderDate %></th>
-                <td><%= i._id %></td>
+                <td>  <img src="/images/uploads/<%= i.imageUrl[0] %>" alt="" width="100" class="img-fluid zoomable"></td>
                 <td><%= i.paymentType %></td>
                 <td>₹<%= i.totalPrice %></td>
                 <td style="color: <%= i.status === 'Placed' ? 'orange' : (i.status === 'Cancelled' ? 'red' : 'green') %>"><%= i.status %></td>
     
-                <td><a class="text-danger" onclick="window.location.href='/login/orderdetails/<%= i._id %>'"> More-details</a></td>
+                <td><a class="text-danger" onclick="window.location.href='/login/orderdetails/<%= i._id %>'" > More-details</a></td>
               </tr>
               <% }); %>
              
