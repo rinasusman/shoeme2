@@ -404,28 +404,55 @@
   </div>
 
   <script>
-  function cancelOrder(orderId) {
-			fetch(`/cancelOrder?orderId=${orderId}`, {
-			  method: "post",
-			  headers: {
-				"Content-Type": "application/json",
-			  },
-			})
-			  .then((response) => {
-				if (response.ok) {
-				 location.reload()
-				} else {
-				  
-				}
-			  })
-			  .catch((error) => {
-				
-			  });
-		  }
+function cancelOrder(orderId) {
+  swal({
+    title: "Are you sure?",
+    text: "You are about to cancel the order.",
+    icon: "warning",
+    buttons: ["Cancel", "Confirm"],
+    dangerMode: true,
+  }).then((confirm) => {
+    if (confirm) {
+      fetch(`/cancelOrder?orderId=${orderId}`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            swal("Order canceled successfully.", {
+              icon: "success",
+            }).then(() => {
+              location.reload();
+            });
+          } else {
+            swal("Failed to cancel the order.", {
+              icon: "error",
+            });
+          }
+        })
+        .catch((error) => {
+          swal("An error occurred while canceling the order.", {
+            icon: "error",
+          });
+        });
+    }
+  });
+}
+
 
   </script>
   <script>
-    function returnOrder(orderId) {
+  function returnOrder(orderId) {
+  swal({
+    title: "Are you sure?",
+    text: "You are about to initiate a return for the order.",
+    icon: "warning",
+    buttons: ["Cancel", "Confirm"],
+    dangerMode: true,
+  }).then((confirm) => {
+    if (confirm) {
       fetch(`/returnOrder?orderId=${orderId}`, {
         method: "post",
         headers: {
@@ -434,16 +461,25 @@
       })
         .then((response) => {
           if (response.ok) {
-            location.reload()
+            swal("Return initiated successfully.", {
+              icon: "success",
+            }).then(() => {
+              location.reload();
+            });
           } else {
-
+            swal("Failed to initiate the return.", {
+              icon: "error",
+            });
           }
         })
         .catch((error) => {
-
+          swal("An error occurred while initiating the return.", {
+            icon: "error",
+          });
         });
     }
-    
+  });
+}
     
     </script>
     <script>
@@ -470,6 +506,9 @@
 
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
   <script src="/template/js/jquery-3.2.1.min.js"></script>
   <script src="/template/styles/bootstrap4/popper.js"></script>
