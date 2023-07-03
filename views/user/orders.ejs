@@ -160,7 +160,9 @@
               <% orderData.forEach((i)=> { %>
               <tr>
                 <th scope="row"><%= i.orderDate %></th>
-                <td>  <img src="/images/uploads/<%= i.imageUrl[0] %>" alt="" width="100" class="img-fluid zoomable"></td>
+                <% i.productDetails.forEach((j)=> { %>
+                <td>  <img src="/images/uploads/<%= j.imageUrl[0] %>" alt="" width="100" class="img-fluid zoomable"></td>
+                <% }); %> 
                 <td><%= i.paymentType %></td>
                 <td>₹<%= i.totalPrice %></td>
                 <td style="color: <%= i.status === 'Placed' ? 'orange' : (i.status === 'Cancelled' ? 'red' : 'green') %>"><%= i.status %></td>
