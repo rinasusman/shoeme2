@@ -29,7 +29,7 @@ function validateAName() {
     } else {
         aName = true;
         document.getElementById("aNameError").innerText = ""
-        updateASubmitButton();
+        // updateASubmitButton();
     }
 }
 
@@ -45,7 +45,7 @@ function validateAEmail() {
     } else {
         aEmail = true
         document.getElementById("aEmailError").innerText = ""
-        updateASubmitButton();
+        // updateASubmitButton();
     }
 }
 
@@ -62,7 +62,7 @@ function validateAMobile() {
     } else {
         aNumber = true
         document.getElementById("aNumberError").innerText = ""
-        updateASubmitButton();
+        // updateASubmitButton();
     }
 }
 
@@ -79,7 +79,7 @@ function validatePinCode() {
     } else {
         pinCodeValid = true;
         document.getElementById("pinError").innerText = "";
-        updateASubmitButton();
+        // updateASubmitButton();
     }
 }
 
@@ -95,7 +95,7 @@ function validateCountryName() {
     } else {
         countryNameValid = true;
         document.getElementById("countryNameError").innerText = "";
-        updateASubmitButton();
+        // updateASubmitButton();
     }
 }
 
@@ -111,7 +111,7 @@ function validateCityName() {
     } else {
         cityNameValid = true;
         document.getElementById("cityNameError").innerText = "";
-        updateASubmitButton();
+        // updateASubmitButton();
     }
 }
 
@@ -124,7 +124,7 @@ function validateAddress() {
     } else {
         addressValid = true;
         document.getElementById("addressError").innerText = "";
-        updateASubmitButton();
+        // updateASubmitButton();
     }
 }
 
